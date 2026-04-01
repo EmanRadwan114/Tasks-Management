@@ -1,0 +1,14 @@
+export { default as BacklogIcon } from "./BacklogIcon";
+export { default as CalendarIcon } from "./CalendarIcon";
+export { default as ChevronDown } from "./ChevronDown";
+export { default as CloseIcon } from "./CloseIcon";
+export { default as DashboardIcon } from "./DashboardIcon";
+export { default as InboxIcon } from "./InboxIcon";
+export { default as LogoutIcon } from "./LogoutIcon";
+export { default as MenuIcon } from "./MenuIcon";
+export { default as PlusIcon } from "./PlusIcon";
+export { default as ReleasesIcon } from "./ReleasesIcon";
+export { default as RoadmapIcon } from "./RoadmapIcon";
+export { default as SearchIcon } from "./SearchIcon";
+export { default as SprintIcon } from "./SprintIcon";
+export { default as TasksIcon } from "./TasksIcon";
