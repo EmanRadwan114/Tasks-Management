@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  /* main colors */
+  --primary: #7c3aed;
+  --primary-background: #ffffff;
+  --primary-foreground: #09090b;
+  --secondary-background: #e4e4e7;
+  --secondary-foreground: #3f3f46;
+  --tertiary-foreground: #71717a;
+  --muted-background: #fafafa;
+  --muted-foreground: #a1a1aa;
+  --active-background: #ede9fe;
+
+  /* brands colors */
+  --brand-default: var(--secondary-foreground);
+  --brand-orange: #f97316;
+  --brand-yellow: #f59e0b;
+  --brand-blue: #3b82f6;
+  --brand-red: #dc2626;
+  --brand-green: #10b981;
+
+  /* status colors */
+  --default-background: #f4f4f5;
+  --default-foreground: var(--tertiary-foreground);
+  --info-background: #dbeafe;
+  --info-foreground: #2563eb;
+  --success-background: #dcfce7;
+  --success-foreground: #16a34a;
+  --danger-background: #fee2e2;
+  --danger-foreground: #dc2626;
+  --warning-background: #fef9c3;
+  --warning-foreground: #ca8a04;
+  --pink-background: #fce7f3;
+  --pink-foreground: #db2777;
+  --purple-background: #e0e7ff;
+  --purple-foreground: #4f46e5;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-background: var(--primary-background);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-background: var(--secondary-background);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-muted-background: var(--muted-background);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-active-background: var(--active-background);
+  --color-brand-default: var(--brand-default);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-red: var(--brand-red);
+  --color-brand-green: var(--brand-green);
+  --color-default-background: var(--default-background);
+  --color-default-foreground: var(--default-foreground);
+  --color-info-background: var(--info-background);
+  --color-info-foreground: var(--info-foreground);
+  --color-success-background: var(--success-background);
+  --color-success-foreground: var(--success-foreground);
+  --color-danger-background: var(--danger-background);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-warning-background: var(--warning-background);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-pink-background: var(--pink-background);
+  --color-pink-foreground: var(--pink-foreground);
+  --color-purple-background: var(--purple-background);
+  --color-purple-foreground: var(--purple-foreground);
+}
+
+body {
+  background: var(--primary-background);
+  color: var(--primary-foreground);
+}
