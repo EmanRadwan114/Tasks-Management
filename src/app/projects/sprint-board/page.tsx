@@ -1,5 +1,5 @@
 function SprintBoard() {
-  return <div>SprintBoard</div>;
+  return <section></section>;
 }
 
 export default SprintBoard;

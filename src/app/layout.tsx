@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.className} h-full antialiased`}>
-      <body className="min-h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <body className="min-h-full flex flex-col md:flex-row">
         {/* navbar */}
         <Navbar />
         {/* main content */}

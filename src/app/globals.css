@@ -102,4 +102,5 @@
 body {
   background: var(--primary-background);
   color: var(--primary-foreground);
+  font-size: var(--text-size-regular);
 }
