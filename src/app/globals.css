@@ -43,6 +43,13 @@
   --font-size-regular: 13px;
   --font-size-sm: 12px;
   --font-size-xs: 11px;
+
+  /* spacing */
+  --spacing-sm: 2px;
+  --spacing-regular: 4px;
+  --spacing-md: 8px;
+  --spacing-lg: 12px;
+  --spacing-xl: 16px;
 }
 
 @theme inline {
@@ -78,15 +85,22 @@
   --color-purple-foreground: var(--purple-foreground);
 
   /* font size */
-  --font-size-xl: var(--font-size-xl);
-  --font-size-lg: var(--font-size-lg);
-  --font-size-md: var(--font-size-md);
-  --font-size-regular: var(--font-size-regular);
-  --font-size-sm: var(--font-size-sm);
-  --font-size-xs: var(--font-size-xs);
+  --text-size-xl: var(--font-size-xl);
+  --text-size-lg: var(--font-size-lg);
+  --text-size-md: var(--font-size-md);
+  --text-size-regular: var(--font-size-regular);
+  --text-size-sm: var(--font-size-sm);
+  --text-size-xs: var(--font-size-xs);
+
+  /* spacing */
+  --spacing-regular: var(--spacing-regular);
+  --spacing-md: var(--spacing-md);
+  --spacing-lg: var(--spacing-lg);
+  --spacing-xl: var(--spacing-xl);
 }
 
 body {
   background: var(--primary-background);
   color: var(--primary-foreground);
+  font-size: var(--text-size-regular);
 }
