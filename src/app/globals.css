@@ -35,9 +35,18 @@
   --pink-foreground: #db2777;
   --purple-background: #e0e7ff;
   --purple-foreground: #4f46e5;
+
+  /* font size */
+  --font-size-xl: 22px;
+  --font-size-lg: 18px;
+  --font-size-md: 14px;
+  --font-size-regular: 13px;
+  --font-size-sm: 12px;
+  --font-size-xs: 11px;
 }
 
 @theme inline {
+  /* colors */
   --color-primary: var(--primary);
   --color-primary-background: var(--primary-background);
   --color-primary-foreground: var(--primary-foreground);
@@ -67,6 +76,14 @@
   --color-pink-foreground: var(--pink-foreground);
   --color-purple-background: var(--purple-background);
   --color-purple-foreground: var(--purple-foreground);
+
+  /* font size */
+  --font-size-xl: var(--font-size-xl);
+  --font-size-lg: var(--font-size-lg);
+  --font-size-md: var(--font-size-md);
+  --font-size-regular: var(--font-size-regular);
+  --font-size-sm: var(--font-size-sm);
+  --font-size-xs: var(--font-size-xs);
 }
 
 body {
