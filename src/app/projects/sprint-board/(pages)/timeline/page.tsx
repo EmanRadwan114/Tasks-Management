@@ -1,3 +1,3 @@
 export default function TimelineViewPage() {
-  return <p>TimelineViewPage</p>;
+  return <p className="py-2.5">TimelineViewPage</p>;
 }

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,7 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.className} h-full antialiased`}>
+    <html
+      lang="en"
+      className={cn(
+        "h-full",
+        "antialiased",
+        inter.className,
+        "font-sans",
+        geist.variable,
+      )}
+    >
       <body
         className="min-h-full flex flex-col md:flex-row"
         suppressHydrationWarning
@@ -27,7 +39,7 @@ export default function RootLayout({
         {/* navbar */}
         <Navbar />
         {/* main content */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 md:ps-60">{children}</main>
       </body>
     </html>
   );

@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import BreadCrumb from "./ui/BreadCrumb";
+import BreadCrumb from "./BreadCrumb";
 import Search from "@/components/ui/Search";
 import { BellIcon, SettingsIcon, MenuIcon } from "@/components/icons";
+import { Button } from "@/components/ui/Button";
 
 const ProjectsHeader: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,12 +14,14 @@ const ProjectsHeader: React.FC = () => {
         <BreadCrumb />
 
         {/* Mobile Menu Toggle */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsOpen(!isOpen)}
-          className="p-1 cursor-pointer text-muted-foreground hover:text-primary transition-colors duration-300 ease-in-out lg:hidden"
+          className="text-muted-foreground hover:bg-muted-background hover:text-primary transition-colors lg:hidden"
         >
           <MenuIcon className="size-5" />
-        </button>
+        </Button>
       </div>
 
       <div
@@ -31,9 +34,9 @@ const ProjectsHeader: React.FC = () => {
         {/* search */}
         <Search
           placeholder="Search tasks..."
-          wrapperClassName="py-1! w-50"
+          wrapperClassName="w-50"
           Key={
-            <div className="bg-default-background text-muted-foreground px-1.75 py-0.75 rounded-sm">
+            <div className="bg-default-background! text-muted-foreground px-1.75 py-0.75 rounded-sm">
               <span className="text-[9px]">Ctrl K</span>
             </div>
           }
@@ -41,14 +44,22 @@ const ProjectsHeader: React.FC = () => {
 
         <div className="flex gap-lg items-center">
           {/* notification */}
-          <div className="p-2.25 rounded-lg border border-secondary-background flex items-center justify-center cursor-pointer transition-colors text-tertiary-foreground  hover:text-primary">
+          <Button
+            variant="outline"
+            size="icon"
+            className="text-tertiary-foreground hover:text-primary"
+          >
             <BellIcon />
-          </div>
+          </Button>
 
           {/* settings */}
-          <div className="p-2.25 rounded-lg border border-secondary-background flex items-center justify-center cursor-pointer transition-colors text-tertiary-foreground  hover:text-primary">
+          <Button
+            variant="outline"
+            size="icon"
+            className="text-tertiary-foreground hover:text-primary"
+          >
             <SettingsIcon />
-          </div>
+          </Button>
 
           {/* profile */}
           <div className="rounded-full bg-primary flex items-center justify-center size-8.5 cursor-pointer shrink-0 hover:scale-105 transition-transform duration-300 ease-in-out">

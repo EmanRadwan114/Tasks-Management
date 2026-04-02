@@ -1,3 +1,3 @@
 export default function CalendarViewPage() {
-  return <p>CalendarViewPage</p>;
+  return <p className="py-2.5">CalendarViewPage</p>;
 }

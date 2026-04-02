@@ -1,7 +1,7 @@
 "use client";
 import { ChevronDown } from "@/components/icons";
 import React from "react";
-import useBreadCrumb from "../../hooks/useBreadCrumb";
+import useBreadCrumb from "../hooks/useBreadCrumb";
 
 const BreadCrumb: React.FC = () => {
   const paths = useBreadCrumb();

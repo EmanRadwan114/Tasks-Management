@@ -1,3 +1,3 @@
 export default function BoardViewPage() {
-  return <p>BoardViewPage</p>;
+  return <p className="py-2.5">BoardViewPage</p>;
 }

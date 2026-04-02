@@ -1,5 +1,9 @@
 import SvgListIcon from "@/components/icons/ListIcon";
-import { IBoardNavsActions, IBoardNavsItems } from "../types/interfaces";
+import {
+  IBoardNavsActions,
+  IBoardNavsItems,
+  ITaskOption,
+} from "../types/interfaces";
 import SvgCalendarIcon from "@/components/icons/CalendarIcon";
 import SvgBoardIcon from "@/components/icons/BoardIcon";
 import SvgTimelineIcon from "@/components/icons/TimelineIcon";
@@ -10,6 +14,7 @@ import {
   OptionsIcons,
   UsersIcon,
 } from "@/components/icons";
+import { TTaskCategory, TTaskPriority, TTaskStatus } from "../types/types";
 
 export const boardNavsItems: IBoardNavsItems[] = [
   {
@@ -56,4 +61,26 @@ export const boardNavsActions: IBoardNavsActions[] = [
     title: "show closed",
     icon: EyeIcon,
   },
+];
+
+export const TaskStatusOptions: ITaskOption[] = [
+  { label: "Backlog", value: TTaskStatus.BACKLOG },
+  { label: "In Progress", value: TTaskStatus.IN_PROGRESS },
+  { label: "Blocked", value: TTaskStatus.BLOCKED },
+  { label: "Done", value: TTaskStatus.DONE },
+];
+
+export const TaskPriorityOptions: ITaskOption[] = [
+  { label: "Low", value: TTaskPriority.LOW },
+  { label: "Medium", value: TTaskPriority.MEDIUM },
+  { label: "High", value: TTaskPriority.HIGH },
+  { label: "Urgent", value: TTaskPriority.URGENT },
+];
+
+export const TaskCategoryOptions: ITaskOption[] = [
+  { label: "Frontend", value: TTaskCategory.FRONTEND },
+  { label: "Backend", value: TTaskCategory.BACKEND },
+  { label: "Design", value: TTaskCategory.DESIGN },
+  { label: "Testing", value: TTaskCategory.TESTING },
+  { label: "DevOps", value: TTaskCategory.DEVOPS },
 ];
