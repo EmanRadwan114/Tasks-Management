@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "svgr": "svgr ./src/assets/icons --out-dir ./src/components/icons"
+    "svgr": "svgr ./src/assets/icons --out-dir ./src/components/icons --ignore-existing"
   },
   "dependencies": {
     "next": "16.2.2",

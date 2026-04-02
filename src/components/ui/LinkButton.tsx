@@ -24,19 +24,19 @@ const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
   ) => {
     // These styles mirror the Button component identically
     const baseStyles =
-      "inline-flex items-center justify-center font-semibold rounded-2xl transition-all duration-300 focus:outline-none focus:ring-4 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] hover:-translate-y-1 hover:shadow-md";
+      "flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] text-size-regular";
 
     const variants = {
       primary:
-        "bg-primary text-primary-background hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] focus:ring-primary/20",
+        "bg-primary text-primary-background hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] focus:ring-primary/20 hover:-translate-y-0.5 hover:shadow-md",
       secondary:
-        "bg-secondary-background text-secondary-foreground focus:ring-secondary-background/50 border border-transparent",
+        "bg-secondary-background text-secondary-foreground focus:ring-secondary-background/50 border border-transparent hover:-translate-y-0.5 hover:shadow-md",
       danger:
         "bg-danger-background text-danger-foreground border border-danger-foreground/10 focus:ring-danger-foreground/20 hover:opacity-90",
       ghost:
         "bg-transparent hover:bg-secondary-background text-secondary-foreground shadow-none hover:shadow-none hover:-translate-y-0",
       outline:
-        "bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-background focus:ring-primary/20",
+        "bg-white border border-secondary-background text-secondary-foreground hover:text-muted-foreground",
       info: "bg-info-background text-info-foreground border border-info-foreground/10 focus:ring-info-foreground/20 hover:opacity-90",
       success:
         "bg-success-background text-success-foreground border border-success-foreground/10 focus:ring-success-foreground/20 hover:opacity-90",
@@ -46,7 +46,7 @@ const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
 
     const sizes = {
       sm: "px-4 py-2 text-xs md:text-sm rounded-xl",
-      md: "px-6 py-3.5 text-sm md:text-[15px]",
+      md: "px-4 py-2.5 text-sm md:text-[15px]",
       lg: "px-8 py-4 text-[15px] md:text-[16px]",
       icon: "p-3 aspect-square",
     };
