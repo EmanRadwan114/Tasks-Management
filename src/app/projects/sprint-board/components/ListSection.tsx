@@ -49,7 +49,9 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
           {tableHeaders.map((header) => (
             <TableHead
               key={header}
-              className="text-xs font-medium text-muted-foreground"
+              className={`text-xs font-medium text-muted-foreground capitalize ${
+                header === "name" ? "" : ""
+              }`}
             >
               {header}
             </TableHead>
@@ -63,19 +65,19 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
             className="bg-white border-y border-secondary-background hover:bg-slate-50/50 transition-colors"
           >
             {/* title & desc */}
-            <TableCell className="">
+            <TableCell>
               <div className="flex items-center gap-2">
-                <div>
+                <div className="shrink-0">
                   <Checkbox />
                 </div>
                 <div
-                  className={`rounded-md w-6 h-6 flex items-center justify-center text-white ${task.taskColor}`}
+                  className={`shrink-0 rounded-md w-6 h-6 flex items-center justify-center text-white ${task.taskColor}`}
                 >
                   <span className="text-[9px] font-bold">
                     {task?.taskInitials}
                   </span>
                 </div>
-                <div className="space-y-px">
+                <div className="min-w-0 space-y-px">
                   <h3 className="text-sm font-semibold text-secondary-foreground">
                     {task.title}
                   </h3>
@@ -88,7 +90,7 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
 
             {/* assignee */}
             <TableCell>
-              {task.assignee && (
+              {task.assignee ? (
                 <div
                   className={`rounded-full w-6 h-6 flex items-center justify-center text-white ${task.assigneeColor}`}
                 >
@@ -96,6 +98,8 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
                     {task?.assigneeInitials}
                   </span>
                 </div>
+              ) : (
+                <div className="w-6 h-6 rounded-full border border-dashed border-muted-foreground/30" />
               )}
             </TableCell>
 
@@ -131,16 +135,18 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
               </span>
             </TableCell>
 
-            {/* category */}
+            {/* category & actions */}
             <TableCell>
-              <div className="flex justify-between items-center gap-4">
+              <div className="flex  items-center justify-between lg:justify-start gap-4">
                 <Badge
                   variant="outline"
                   className={` ${getCategoryColor(task.category)} border-0`}
                 >
                   {task.category}
                 </Badge>
-                <TaskActions task={task} />
+                <div className="flex-1 text-end lg:text-center">
+                  <TaskActions task={task} />
+                </div>
               </div>
             </TableCell>
           </TableRow>

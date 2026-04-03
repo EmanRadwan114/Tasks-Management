@@ -11,7 +11,7 @@ const BoardHeader: React.FC = () => {
   return (
     <>
       <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-y-2">
-        <h1 className="text-size-xl font-bold">Sprint Board</h1>
+        <h1 className="text-size-lg md:text-size-xl font-bold">Sprint Board</h1>
         <div className="flex items-center gap-2 flex-1 sm:flex-none">
           <Button className="flex-1" onClick={handleModalOpen}>
             <PlusIcon className="text-white size-3.5" />

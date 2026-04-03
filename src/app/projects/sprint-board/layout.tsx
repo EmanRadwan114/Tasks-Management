@@ -7,7 +7,7 @@ export default function SprintBoardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="py-3 bg-muted-background space-y-4 sm:space-y-0">
+    <section className="pt-3 bg-muted-background space-y-4 sm:space-y-0">
       <div className="px-2 sm:px-7">
         <BoardHeader />
       </div>
