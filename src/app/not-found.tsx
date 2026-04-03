@@ -4,7 +4,7 @@ import { LinkButton } from "@/components/ui/LinkButton";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center p-6 h-full bg-primary-background text-primary-foreground relative overflow-hidden rounded-2xl z-0">
+    <div className="flex flex-col items-center justify-center p-6 md:p-0 h-full bg-primary-background text-primary-foreground relative overflow-hidden rounded-2xl z-0">
       {/* Decorative background blurs for premium glassmorphism feel */}
       <div className="absolute top-[10%] left-[20%] w-[35vw] h-[35vw] max-w-100 max-h-100 bg-info-background rounded-full blur-[80px] md:blur-[120px] -z-10 opacity-70"></div>
       <div className="absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] max-w-100 max-h-100 bg-purple-background rounded-full blur-[80px] md:blur-[120px] -z-10 opacity-70"></div>
