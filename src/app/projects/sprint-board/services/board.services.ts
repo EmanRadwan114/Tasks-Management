@@ -2,11 +2,13 @@ import { IComment, ITask } from "../types/interfaces";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL;
 
-
 // add task
 export const addTask = async (task: ITask) => {
   const response = await fetch(`${BASE_URL}/api/tasks`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(task),
   });
   const data = await response.json();
@@ -37,6 +39,9 @@ export const fetchTaskById = async (taskId: number) => {
 export const updateTask = async (taskId: number, task: ITask) => {
   const response = await fetch(`${BASE_URL}/api/tasks/${taskId}`, {
     method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(task),
   });
   const data = await response.json();
@@ -47,6 +52,9 @@ export const updateTask = async (taskId: number, task: ITask) => {
 export const archiveTask = async (taskId: number) => {
   const response = await fetch(`${BASE_URL}/api/tasks/${taskId}/archive`, {
     method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   const data = await response.json();
   return data;
@@ -56,6 +64,9 @@ export const archiveTask = async (taskId: number) => {
 export const createComment = async (taskId: number, comment: IComment) => {
   const response = await fetch(`${BASE_URL}/api/tasks/${taskId}/comments`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(comment),
   });
   const data = await response.json();
