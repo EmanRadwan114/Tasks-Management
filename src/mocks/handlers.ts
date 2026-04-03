@@ -93,8 +93,6 @@ export const handlers = [
       });
     }
 
-    task.archived = true;
-
     return HttpResponse.json({
       data: task,
       status: 200,
@@ -137,15 +135,6 @@ export const handlers = [
         success: false,
       });
     }
-
-    task.title = body?.title;
-    task.description = body?.description;
-    task.status = body?.status;
-    task.priority = body?.priority;
-    task.assigneeId = body?.assigneeId;
-    task.category = body?.category;
-    task.startDate = body?.startDate;
-    task.dueDate = body?.dueDate;
 
     return HttpResponse.json({
       data: task,

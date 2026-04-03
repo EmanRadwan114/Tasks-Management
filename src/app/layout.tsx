@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
 import { MswProvider } from "@/mocks/MswProvider";
+import { ToastContainer } from "react-toastify";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <MswProvider>
+          <ToastContainer />
           {/* navbar */}
           <Navbar />
           {/* main content */}
