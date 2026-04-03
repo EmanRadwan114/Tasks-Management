@@ -1,6 +1,9 @@
 import { IComment, ITask } from "../types/interfaces";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL;
+const BASE_URL =
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  process.env.BASE_URL ||
+  "http://localhost:3000";
 
 // add task
 export const addTask = async (task: ITask) => {
