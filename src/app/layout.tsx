@@ -3,6 +3,7 @@ import { Inter, Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { cn } from "@/lib/utils";
+import { MswProvider } from "@/mocks/MswProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -36,10 +37,12 @@ export default function RootLayout({
         className="min-h-full flex flex-col md:flex-row"
         suppressHydrationWarning
       >
-        {/* navbar */}
-        <Navbar />
-        {/* main content */}
-        <main className="flex-1 md:ps-60">{children}</main>
+        <MswProvider>
+          {/* navbar */}
+          <Navbar />
+          {/* main content */}
+          <main className="flex-1 md:ps-60">{children}</main>
+        </MswProvider>
       </body>
     </html>
   );

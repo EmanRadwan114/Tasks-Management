@@ -193,3 +193,37 @@ body {
 .date-input::-webkit-clear-button {
   display: none;
 }
+
+/* custome scrollbar */
+/* Scrollbar for Chrome, Edge, Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent; /* light gray track */
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none; /* fallback */
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 8px;
+  border: 2px solid transparent; /* space around thumb */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-foreground); /* darker on hover */
+}
+
+/* Scrollbar for Firefox */
+* {
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: var(--tertiary-foreground) transparent; /* thumb color | track color */
+}
