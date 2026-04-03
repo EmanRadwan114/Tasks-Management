@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/popover";
 import TaskForm from "./TaskForm";
 import { useTaskActions } from "../hooks/useTaskActions";
+import ArchiveModal from "./ArchiveModal";
 
 interface IProps {
   task: ITask;
@@ -19,14 +20,15 @@ interface IProps {
 const TaskActions: React.FC<IProps> = ({ task }) => {
   const {
     editingTask,
-    isEditModalOpen,
+    modalType,
+    modalOpen,
     isPopoverOpen,
     handleEditClick,
     handleArchiveClick,
     setIsPopoverOpen,
     setEditingTask,
-    setIsEditModalOpen,
-  } = useTaskActions(task);
+    setModalOpen,
+  } = useTaskActions();
 
   return (
     <>
@@ -59,15 +61,25 @@ const TaskActions: React.FC<IProps> = ({ task }) => {
           </div>
         </PopoverContent>
       </Popover>
-      {isEditModalOpen && (
+      {modalOpen && modalType === "edit" && (
         <TaskForm
-          type="edit"
-          title="Edit Task"
+          type={modalType}
+          title={modalType === "edit" ? "Edit Task" : "Archive Task"}
           task={editingTask || undefined}
           handleModalClose={() => {
-            setIsEditModalOpen(false);
+            setModalOpen(false);
             setEditingTask(null);
           }}
+        />
+      )}
+
+      {modalOpen && modalType === "archive" && (
+        <ArchiveModal
+          handleModalClose={() => {
+            setModalOpen(false);
+            setEditingTask(null);
+          }}
+          id={task.id}
         />
       )}
     </>

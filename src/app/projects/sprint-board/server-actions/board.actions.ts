@@ -82,10 +82,13 @@ export const updateTaskAction = async (
 
 // archive task action
 export const archiveTaskAction = async (
-  id: number,
+  id: number | undefined,
   prev: unknown,
   formData: FormData,
 ) => {
+  if (!id) {
+    return { success: false, error: "Task ID is required" };
+  }
   const response = await archiveTask(id);
 
   if (response.success) {
