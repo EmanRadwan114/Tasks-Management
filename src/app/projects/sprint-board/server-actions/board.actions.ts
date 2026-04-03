@@ -39,45 +39,50 @@ export const updateTaskAction = async (
   prev: unknown,
   formData: FormData,
 ) => {
-  const task: ITask = {};
+  try {
+    const task: ITask = {};
 
-  if (formData.get("title")) {
-    task.title = formData.get("title") as string;
-  }
-  if (formData.get("description")) {
-    task.description = formData.get("description") as string;
-  }
-  if (formData.get("status")) {
-    task.status = formData.get("status") as TTaskStatus;
-  }
-  if (formData.get("priority")) {
-    task.priority = formData.get("priority") as TTaskPriority;
-  }
-  if (formData.get("assignee")) {
-    task.assigneeId = Number(formData.get("assignee"));
-  }
-  if (formData.get("category")) {
-    task.category = formData.get("category") as TTaskCategory;
-  }
-  if (formData.get("startDate")) {
-    task.startDate = formData.get("startDate") as string;
-  }
-  if (formData.get("dueDate")) {
-    task.dueDate = formData.get("dueDate") as string;
-  }
+    if (formData.get("title")) {
+      task.title = formData.get("title") as string;
+    }
+    if (formData.get("description")) {
+      task.description = formData.get("description") as string;
+    }
+    if (formData.get("status")) {
+      task.status = formData.get("status") as TTaskStatus;
+    }
+    if (formData.get("priority")) {
+      task.priority = formData.get("priority") as TTaskPriority;
+    }
+    if (formData.get("assignee")) {
+      task.assigneeId = Number(formData.get("assignee"));
+    }
+    if (formData.get("category")) {
+      task.category = formData.get("category") as TTaskCategory;
+    }
+    if (formData.get("startDate")) {
+      task.startDate = formData.get("startDate") as string;
+    }
+    if (formData.get("dueDate")) {
+      task.dueDate = formData.get("dueDate") as string;
+    }
 
-  task.updatedAt = new Date().toISOString();
+    task.updatedAt = new Date().toISOString();
 
-  if (!id) {
-    return { success: false, error: "Task ID is required" };
+    if (!id) {
+      return { success: false, error: "Task ID is required" };
+    }
+    const response = await updateTask(id, task);
+    if (response.success) {
+      revalidatePath("/projects/sprint-board");
+      revalidatePath(`/projects/sprint-board/${id}`);
+      return { success: true, data: response };
+    }
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Something went wrong";
+    return { success: false, error: errorMessage };
   }
-  const response = await updateTask(id, task);
-  if (response.success) {
-    revalidatePath("/projects/sprint-board");
-    revalidatePath(`/projects/sprint-board/${id}`);
-    return { success: true, data: response };
-  }
-  return { success: false, error: response.error };
 };
 
 // archive task action
@@ -86,17 +91,22 @@ export const archiveTaskAction = async (
   prev: unknown,
   formData: FormData,
 ) => {
-  if (!id) {
-    return { success: false, error: "Task ID is required" };
-  }
-  const response = await archiveTask(id);
+  try {
+    if (!id) {
+      return { success: false, error: "Task ID is required" };
+    }
+    const response = await archiveTask(id);
 
-  if (response.success) {
-    revalidatePath("/projects/sprint-board");
-    revalidatePath(`/projects/sprint-board/${id}`);
-    return { success: true, data: response };
+    if (response.success) {
+      revalidatePath("/projects/sprint-board");
+      revalidatePath(`/projects/sprint-board/${id}`);
+      return { success: true, data: response };
+    }
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Something went wrong";
+    return { success: false, error: errorMessage };
   }
-  return { success: false, error: response.error };
 };
 
 // create comment action
@@ -105,15 +115,21 @@ export const createCommentAction = async (
   prev: unknown,
   formData: FormData,
 ) => {
-  const comment: IComment = {
-    taskId: Number(formData.get("taskId")),
-    message: formData.get("message") as string,
-    createdAt: new Date().toISOString(),
-  };
-  const response = await createComment(taskId, comment);
-  if (response.success) {
-    revalidatePath(`/projects/sprint-board/${taskId}`);
-    return { success: true, data: response };
+  try {
+    const comment: IComment = {
+      taskId: Number(formData.get("taskId")),
+      message: formData.get("message") as string,
+      createdAt: new Date().toISOString(),
+    };
+    const response = await createComment(taskId, comment);
+    if (response.success) {
+      revalidatePath(`/projects/sprint-board/${taskId}`);
+      return { success: true, data: response };
+    }
+    return { success: false, error: response.error };
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Something went wrong";
+    return { success: false, error: errorMessage };
   }
-  return { success: false, error: response.error };
 };
