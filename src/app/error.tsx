@@ -54,15 +54,15 @@ export default function ErrorPage({
             </p>
           </div>
 
-          <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:space-x-4 space-y-4 sm:space-y-0 w-full pt-2">
+          <div className="flex flex-col items-center sm:flex-row sm:justify-center sm:space-x-1.5 space-y-4 sm:space-y-0 w-full pt-2">
             <Button
-              variant="primary"
+              variant="default"
               size="md"
-              className="w-full sm:w-auto group/btn px-8 hover:-translate-y-1.5"
+              className="w-full sm:w-auto group/btn hover:-translate-y-1.5"
               onClick={() => reset()}
             >
               <svg
-                className="w-5 h-5 me-2.5 transition-transform duration-500 group-hover/btn:-rotate-180"
+                className="w-5 h-5 transition-transform duration-500 group-hover/btn:-rotate-180"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

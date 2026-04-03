@@ -5,10 +5,8 @@ import Search from "./ui/Search";
 import ChevronDown from "./icons/ChevronDown";
 import { generalItems, projectItems } from "@/data/navItems";
 import NavSection from "./ui/NavSection";
-import SvgLogoutIcon from "./icons/LogoutIcon";
-import SvgMenuIcon from "./icons/MenuIcon";
-import SvgCloseIcon from "./icons/CloseIcon";
-import SvgPlusIcon from "./icons/PlusIcon";
+import { Button } from "./ui/Button";
+import { LogoutIcon, MenuIcon, CloseIcon, PlusIcon } from "@/components/icons";
 import useMobileNav from "@/hooks/useMobileNav";
 
 const Navbar: React.FC = () => {
@@ -26,7 +24,7 @@ const Navbar: React.FC = () => {
           <div className="size-8 bg-primary rounded-lg uppercase flex items-center justify-center text-white font-bold text-size-md leading-none">
             E
           </div>
-          <div className="flex flex-col gap-y-1">
+          <div className="flex flex-col">
             <p className="text-md font-semibold">Eng Tasks</p>
             <span className="text-size-xs text-muted-foreground">
               Engineering Team
@@ -37,12 +35,14 @@ const Navbar: React.FC = () => {
           <ChevronDown className="text-muted-foreground" />
         </div>
         {isMobile && (
-          <button
+          <Button
+            variant="outline"
+            size="icon-sm"
             onClick={() => setIsOpen(!isOpen)}
-            className="py-1.5 px-2 cursor-pointer flex items-center justify-center border border-secondary-background rounded-lg text-muted-foreground hover:text-default-foreground transition-colors duration-300 ease-in-out"
+            className="text-muted-foreground hover:text-foreground"
           >
-            <SvgCloseIcon className="size-2" />
-          </button>
+            <CloseIcon className="size-3" />
+          </Button>
         )}
       </div>
 
@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
       {/* navitems */}
       <div className="flex flex-col gap-y-lg">
         <NavSection title="General" items={generalItems} />
-        <NavSection title="Projects" items={projectItems} icon={SvgPlusIcon} />
+        <NavSection title="Projects" items={projectItems} icon={PlusIcon} />
       </div>
 
       {/* user */}
@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
           <div className="size-7 bg-brand-blue rounded-full uppercase flex items-center justify-center text-white font-medium text-size-xs leading-none">
             SC
           </div>
-          <div className="flex flex-col gap-y-[2.5px]">
+          <div className="flex flex-col">
             <p className="text-size-regular font-medium">Sarah Chen</p>
             <span className="text-size-xs text-muted-foreground">
               sarah@eng.co
@@ -71,14 +71,14 @@ const Navbar: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center justify-center p-0.5 cursor-pointer">
-          <SvgLogoutIcon className="text-muted-foreground" />
+          <LogoutIcon className="text-muted-foreground" />
         </div>
       </div>
     </>
   );
 
   const desktopNav = (
-    <nav className="w-60 h-screen px-md py-lg flex flex-col gap-y-xl border-e border-secondary-background">
+    <nav className="fixed inset-y-0 inset-s-0 w-60 h-screen px-md py-lg flex flex-col gap-y-xl border-e border-secondary-background z-60 bg-white">
       {navDrawer}
     </nav>
   );
@@ -92,12 +92,14 @@ const Navbar: React.FC = () => {
           </div>
           <p className="text-md font-semibold">Eng Tasks</p>
         </div>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsOpen(!isOpen)}
-          className="p-1 cursor-pointer text-muted-foreground hover:text-primary transition-colors duration-300 ease-in-out"
+          className="text-muted-foreground hover:bg-muted-background hover:text-primary transition-colors"
         >
-          <SvgMenuIcon className="size-5" />
-        </button>
+          <MenuIcon className="size-5 " />
+        </Button>
       </nav>
 
       {/* Overlay */}

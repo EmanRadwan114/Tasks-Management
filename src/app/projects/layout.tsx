@@ -1,9 +1,9 @@
-import BoardHeader from "./sprint-board/components/BoardHeader";
+import ProjectsHeader from "./sprint-board/components/ProjectsHeader";
 
 function TasksLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <BoardHeader />
+      <ProjectsHeader />
       {children}
     </>
   );

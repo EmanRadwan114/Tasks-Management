@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { cn } from "@/lib/utils";
+import { MswProvider } from "@/mocks/MswProvider";
+import { ToastContainer } from "react-toastify";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,12 +24,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.className} h-full antialiased`}>
-      <body className="min-h-full flex flex-col md:flex-row">
-        {/* navbar */}
-        <Navbar />
-        {/* main content */}
-        <main className="flex-1">{children}</main>
+    <html
+      lang="en"
+      className={cn(
+        "h-full",
+        "antialiased",
+        inter.className,
+        "font-sans",
+        geist.variable,
+      )}
+    >
+      <body
+        className="min-h-full flex flex-col md:flex-row"
+        suppressHydrationWarning
+      >
+        <MswProvider>
+          <ToastContainer />
+          {/* navbar */}
+          <Navbar />
+          {/* main content */}
+          <main className="flex-1 md:ps-60">{children}</main>
+        </MswProvider>
       </body>
     </html>
   );

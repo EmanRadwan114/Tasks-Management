@@ -4,7 +4,7 @@ import { LinkButton } from "@/components/ui/LinkButton";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center p-6 h-full bg-primary-background text-primary-foreground relative overflow-hidden rounded-2xl z-0">
+    <div className="flex flex-col items-center justify-center p-6 md:p-0 h-full bg-primary-background text-primary-foreground relative overflow-hidden rounded-2xl z-0">
       {/* Decorative background blurs for premium glassmorphism feel */}
       <div className="absolute top-[10%] left-[20%] w-[35vw] h-[35vw] max-w-100 max-h-100 bg-info-background rounded-full blur-[80px] md:blur-[120px] -z-10 opacity-70"></div>
       <div className="absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] max-w-100 max-h-100 bg-purple-background rounded-full blur-[80px] md:blur-[120px] -z-10 opacity-70"></div>
@@ -32,9 +32,9 @@ export default function NotFound() {
           </p>
         </div>
 
-        <LinkButton href="/" variant="primary">
+        <LinkButton href="/" variant="default">
           <svg
-            className="w-5 h-5 mr-3 transition-transform duration-300 group-hover:-translate-x-1"
+            className="size-3 transition-transform duration-300 group-hover:-translate-x-1"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -47,7 +47,7 @@ export default function NotFound() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          Back to Dashboard
+          Back to Home
         </LinkButton>
       </div>
     </div>

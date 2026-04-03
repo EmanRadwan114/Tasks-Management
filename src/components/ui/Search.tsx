@@ -1,41 +1,38 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import SearchIcon from "../icons/SearchIcon";
+import { cn } from "@/lib/utils";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "./input-group";
 
 interface SearchProps {
   placeholder?: string;
   Key?: ReactNode;
   wrapperClassName?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Search: React.FC<SearchProps> = ({
   placeholder = "Search...",
   Key,
   wrapperClassName,
+  value,
+  onChange,
 }) => {
-  const [search, setSearch] = useState("");
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-  };
-
   return (
-    <div
-      className={`flex-1 flex items-center justify-between gap-2 border border-secondary-background rounded-lg px-2.5 py-2 focus-within:border-primary bg-muted-background ${wrapperClassName}`}
-    >
-      <div className="flex items-center gap-2 flex-1 min-w-0">
+    <InputGroup className={cn("flex-1 bg-muted-background", wrapperClassName)}>
+      <InputGroupAddon>
         <SearchIcon className="text-muted-foreground size-3" />
-        <input
-          type="text"
-          placeholder={placeholder}
-          value={search}
-          onChange={handleSearch}
-          className="focus-within:outline-none text-size-sm w-full min-w-0"
-        />
-      </div>
-      {Key}
-    </div>
+      </InputGroupAddon>
+      <InputGroupInput
+        type="text"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+      {Key && <InputGroupAddon align="inline-end">{Key}</InputGroupAddon>}
+    </InputGroup>
   );
 };
 
