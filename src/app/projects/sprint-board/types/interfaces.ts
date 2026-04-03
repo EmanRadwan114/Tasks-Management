@@ -14,28 +14,28 @@ export interface IBoardNavsActions {
 
 export interface ITask {
   id?: number;
-  title: string;
-  description: string;
-  status: TTaskStatus;
-  priority: TTaskPriority;
-  category: TTaskCategory;
-  startDate: string;
-  dueDate: string;
-  assigneeId: number;
-  archived: boolean;
-  createdAt: string;
-  updatedAt: string;
+  title?: string;
+  description?: string;
+  status?: TTaskStatus;
+  priority?: TTaskPriority;
+  category?: TTaskCategory;
+  startDate?: string;
+  dueDate?: string;
+  assigneeId?: number;
+  archived?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface IComment {
-  id: number;
+  id?: number;
   taskId: number;
   message: string;
   createdAt: string;
 }
 
 export interface IUser {
-  id: number;
+  id?: number;
   name: string;
   email: string;
 }
