@@ -1,18 +1,26 @@
 "use client";
+
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import FormField from "@/components/ui/FormField";
 import SelectFormField from "@/components/ui/SelectFormField";
-import React from "react";
+import DateField from "@/components/ui/DateField";
+import Modal from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+
 import {
   TaskCategoryOptions,
   TaskPriorityOptions,
   TaskStatusOptions,
 } from "../data/data";
-import DateField from "@/components/ui/DateField";
-import Modal from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
+import { useCreateTaskAction } from "../hooks/useHandleActions";
+import { TaskSchema, TaskSchemaType } from "../validation/board.validation";
 
 interface IProps {
   title?: string;
+  type?: "add" | "edit";
   handleModalClose: () => void;
 }
 
@@ -20,47 +28,169 @@ const TaskForm: React.FC<IProps> = ({
   title = "Create New Task",
   handleModalClose,
 }) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isValid },
+  } = useForm<TaskSchemaType>({
+    resolver: zodResolver(TaskSchema),
+    mode: "onChange",
+    defaultValues: {
+      title: "",
+      description: "",
+      status: "",
+      priority: "",
+      assignee: "",
+      category: "",
+      startDate: "",
+      endDate: "",
+    },
+  });
+
+  const { handleCreateTask, isPending } = useCreateTaskAction();
+
+  const onSubmit = (data: TaskSchemaType) => {
+    console.log(data); // <-- all fields will be logged correctly
+    // handleCreateTask(data);
+  };
+
   return (
     <Modal title={title} onClose={handleModalClose}>
-      {/* form fields */}
-      <form className="space-y-5 p-7">
-        <FormField label="Title" placeholder="Enter task title..." />
-        <FormField
-          label="Description"
-          placeholder="Enter description..."
-          type="textarea"
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <SelectFormField
-            label="Status"
-            placeholder="Select status..."
-            options={TaskStatusOptions}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-5 p-7">
+          {/* Title and Description */}
+          <FormField
+            {...register("title")}
+            label="Title"
+            placeholder="Enter task title..."
+            error={errors.title?.message}
           />
-          <SelectFormField
-            label="Priority"
-            placeholder="Select priority..."
-            options={TaskPriorityOptions}
+
+          <FormField
+            {...register("description")}
+            label="Description"
+            placeholder="Enter description..."
+            type="textarea"
+            error={errors.description?.message}
           />
-          <SelectFormField
-            label="Assignee"
-            placeholder="Select assignee..."
-            options={TaskCategoryOptions}
-          />
-          <SelectFormField
-            label="Category"
-            placeholder="Select category..."
-            options={TaskCategoryOptions}
-          />
-          <DateField label="Start Date" placeholder="Select date..." />
-          <DateField label="End Date" placeholder="Select date..." />
+
+          {/* Grid for select and date fields */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {/* Status */}
+            <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                <SelectFormField
+                  {...field}
+                  label="Status"
+                  placeholder="Select status..."
+                  options={TaskStatusOptions}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  error={errors.status?.message}
+                />
+              )}
+            />
+
+            {/* Priority */}
+            <Controller
+              name="priority"
+              control={control}
+              render={({ field }) => (
+                <SelectFormField
+                  {...field}
+                  label="Priority"
+                  placeholder="Select priority..."
+                  options={TaskPriorityOptions}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  error={errors.priority?.message}
+                />
+              )}
+            />
+
+            {/* Assignee */}
+            <Controller
+              name="assignee"
+              control={control}
+              render={({ field }) => (
+                <SelectFormField
+                  {...field}
+                  label="Assignee"
+                  placeholder="Select assignee..."
+                  options={TaskCategoryOptions}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  error={errors.assignee?.message}
+                />
+              )}
+            />
+
+            {/* Category */}
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <SelectFormField
+                  {...field}
+                  label="Category"
+                  placeholder="Select category..."
+                  options={TaskCategoryOptions}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  error={errors.category?.message}
+                />
+              )}
+            />
+
+            {/* Start Date */}
+            <Controller
+              name="startDate"
+              control={control}
+              render={({ field }) => (
+                <DateField
+                  {...field}
+                  value={field.value || ""}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    field.onChange(e.target.value)
+                  }
+                  label="Start Date"
+                  placeholder="Select date..."
+                  error={errors.startDate?.message}
+                />
+              )}
+            />
+
+            {/* End Date */}
+            <Controller
+              name="endDate"
+              control={control}
+              render={({ field }) => (
+                <DateField
+                  {...field}
+                  value={field.value}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    field.onChange(e.target.value)
+                  }
+                  label="End Date"
+                  placeholder="Select date..."
+                  error={errors.endDate?.message}
+                />
+              )}
+            />
+          </div>
         </div>
 
-        {/* actions */}
-        <div className="border-t border-secondary-background flex justify-end gap-3 px-7 py-3 mt-2  ">
+        {/* Actions */}
+        <div className="border-t border-secondary-background flex justify-end gap-3 px-7 py-3 mt-2">
           <Button variant="outline" onClick={handleModalClose}>
             Cancel
           </Button>
-          <Button type="submit">Create Task</Button>
+          <Button type="submit" disabled={isPending || !isValid}>
+            {isPending ? "Creating..." : "Create Task"}
+          </Button>
         </div>
       </form>
     </Modal>
