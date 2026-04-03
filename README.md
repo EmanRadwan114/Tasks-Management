@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tasks Management System
 
-## Getting Started
+A dynamic, modern task management application built with Next.js, featuring a robust sprint board, task lifecycle management, and a seamless developer experience with API mocking.
 
-First, run the development server:
+### 1. Installation
+
+Clone the repository and install dependencies using npm:
+
+```bash
+npm install
+```
+
+### 2. Connect to API
+
+By default, the application uses **Mock Service Worker (MSW)** to handle API requests locally.
+If you want to connect to a real backend, you can set the `NEXT_PUBLIC_BASE_URL` or `BASE_URL` environment variables in a `.env` file:
+
+```env
+NEXT_PUBLIC_BASE_URL=https://your-api-url.com
+```
+
+### 3. Run Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Library**: React 19
+- **State Management**: Zustand
+- **UI Architecture**: Shadcn UI + Tailwind CSS
+- **Form Handling**: React Hook Form + Zod
+- **API Mocking**: MSW (Mock Service Worker)
+- **Data Fetching**: Next.js built-in data fetching
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Sprint Board**: Visualize tasks across different states (To Do, In Progress, Done, etc.).
+- **Task Management**: Create, edit, and archive tasks with ease.
+- **Assignees**: Dynamically manage and view task assignees.
+- **Form Validation**: Strict client-side and server-side validation.
+- **Mocked Backend**: Fully functional API simulation for localized development.
+- **Responsive UI**: Optimized for both mobile and desktop views using modern CSS patterns.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🏗️ Architecture Decisions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Layered Service-Action Pattern**: Logic is separated into Services (API calls), Server Actions (Data mutations), and Hooks (UI logic), ensuring maximum reusability and clean code.
+- **App Router & Server Actions**: Leveraged Next.js's native features to handle data flow, reducing the need for heavy client-side state when possible.
+- **Zustand for Global Store**: Used for lightweight, reactive state management (e.g., managing assignee data).
+- **MSW for Decoupled Development**: Integrated MSW to allow frontend development to proceed even without a live backend, ensuring the app is always "runnable" out of the box.
+- **Zod for Schema-First Development**: Enforces consistent data structures across the application.
+
+---
+
+## 📂 Project Structure
+
+```bash
+src/
+├── app/                 # Next.js App Router (Pages, Layouts, Server Actions)
+│   └── projects/        # Sprint board and specific project views
+├── components/          # Shared UI and Shadcn components
+├── hooks/               # Custom React hooks (Logic extraction)
+├── services/            # API service layer (Fetch requests)
+├── mocks/               # MSW handlers and configuration
+├── store/               # Zustand global state stores
+├── lib/                 # Utility functions and configuration
+└── types/               # TypeScript interfaces and types
+```
+
+---
