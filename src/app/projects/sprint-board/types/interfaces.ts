@@ -27,6 +27,17 @@ export interface ITask {
   updatedAt?: string;
 }
 
+export interface IDisplayTask extends ITask {
+  taskInitials?: string;
+  taskColor?: string;
+  assignee?: IUser;
+  assigneeColor?: string;
+  assigneeInitials?: string;
+  displayedDueDate?: string;
+  displayedStartDate?: string;
+  isTaskLate?: boolean;
+}
+
 export interface IComment {
   id?: number;
   taskId: number;
@@ -43,4 +54,55 @@ export interface IUser {
 export interface ITaskOption {
   label: string;
   value: TTaskStatus | TTaskPriority | TTaskCategory;
+}
+
+export interface ITasksResponse {
+  data: ITask[];
+  status: number;
+  message: string;
+  success: boolean;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface IUsersResponse {
+  data: IUser[];
+  status: number;
+  message: string;
+  success: boolean;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface ICommentsResponse {
+  data: IComment[];
+  status: number;
+  message: string;
+  success: boolean;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface ITaskResponse {
+  data: ITask;
+  status: number;
+  message: string;
+  success: boolean;
+}
+
+export interface ICommentResponse {
+  data: IComment;
+  status: number;
+  message: string;
+  success: boolean;
+}
+
+export interface IUserResponse {
+  data: IUser;
+  status: number;
+  message: string;
+  success: boolean;
 }

@@ -84,3 +84,12 @@ export const TaskCategoryOptions: ITaskOption[] = [
   { label: "Testing", value: TTaskCategory.TESTING },
   { label: "DevOps", value: TTaskCategory.DEVOPS },
 ];
+
+export const tableHeaders = [
+  "Name",
+  "Assignee",
+  "Priority",
+  "Start",
+  "Due",
+  "Category",
+];

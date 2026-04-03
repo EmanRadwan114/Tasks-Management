@@ -13,7 +13,7 @@ export default function SprintBoardLayout({
       </div>
       <BoardNavs />
 
-      <div className="px-2 sm:px-7">{children}</div>
+      <div>{children}</div>
     </section>
   );
 }

@@ -15,7 +15,7 @@ import { http, HttpResponse } from "msw";
 
 export const handlers = [
   // create new comment
-  http.post("/api/tasks/:id/comments", async ({ request }) => {
+  http.post("*/api/tasks/:id/comments", async ({ request }) => {
     const body = await request.json();
     const comment = addItem(body as IComment, comments);
 
@@ -28,7 +28,7 @@ export const handlers = [
   }),
 
   // get comments for specific task
-  http.get("/api/tasks/:id/comments", ({ params }) => {
+  http.get("*/api/tasks/:id/comments", ({ params }) => {
     const { id } = params;
     const fetchedComments = fetchFilteredItems("taskId", Number(id), comments);
     console.log("COMMENTS HANDLER HIT");
@@ -44,7 +44,7 @@ export const handlers = [
     });
   }),
   // fetch all users
-  http.get("/api/users", () => {
+  http.get("*/api/users", () => {
     return HttpResponse.json({
       data: users,
       status: 200,
@@ -56,7 +56,7 @@ export const handlers = [
     });
   }),
   // create new task
-  http.post("/api/tasks", async ({ request }) => {
+  http.post("*/api/tasks", async ({ request }) => {
     const body = await request.json();
     const task = addItem(body as ITask, tasks);
 
@@ -68,7 +68,7 @@ export const handlers = [
     });
   }),
   // fetch all tasks
-  http.get("/api/tasks", () => {
+  http.get("*/api/tasks", () => {
     return HttpResponse.json({
       data: tasks,
       status: 200,
@@ -80,7 +80,7 @@ export const handlers = [
     });
   }),
   // archive task by id
-  http.patch("/api/tasks/:id/archive", ({ params }) => {
+  http.patch("*/api/tasks/:id/archive", ({ params }) => {
     const { id } = params;
     const task = archiveItem(Number(id), tasks);
 
@@ -101,7 +101,7 @@ export const handlers = [
     });
   }),
   // fetch single task by id
-  http.get("/api/tasks/:id", ({ params }) => {
+  http.get("*/api/tasks/:id", ({ params }) => {
     const { id } = params;
     const task = fetchItems(Number(id), tasks);
 
@@ -122,7 +122,7 @@ export const handlers = [
     });
   }),
   // update task by id
-  http.patch("/api/tasks/:id", async ({ params, request }) => {
+  http.patch("*/api/tasks/:id", async ({ params, request }) => {
     const { id } = params;
     const body = (await request.json()) as ITask;
     const task = updateItem(Number(id), body, tasks);

@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
   );
 
   const desktopNav = (
-    <nav className="fixed inset-y-0 inset-s-0 w-60 h-screen px-md py-lg flex flex-col gap-y-xl border-e border-secondary-background z-40">
+    <nav className="fixed inset-y-0 inset-s-0 w-60 h-screen px-md py-lg flex flex-col gap-y-xl border-e border-secondary-background z-60 bg-white">
       {navDrawer}
     </nav>
   );

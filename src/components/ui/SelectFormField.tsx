@@ -55,7 +55,9 @@ const SelectFormField: React.FC<SelectFormFieldProps> = ({
         disabled={disabled}
       >
         <SelectTrigger id={id} className="w-full">
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder={placeholder}>
+            {options.find((option) => option.value === value)?.label}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent alignItemWithTrigger={false}>
           {options.map((option) => (

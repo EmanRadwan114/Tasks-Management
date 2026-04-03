@@ -6,21 +6,31 @@ import {
   updateTaskAction,
 } from "../server-actions/board.actions";
 import { toast } from "react-toastify";
-import { IComment, ITask } from "../types/interfaces";
+import { IComment } from "../types/interfaces";
+import { TaskSchemaType } from "../validation/board.validation";
 
-export const useCreateTaskAction = () => {
+export const useHandleTaskSubmitAction = (
+  id: number | undefined,
+  onModalClose: () => void,
+) => {
+  const updateTaskWithId = updateTaskAction.bind(null, id || 0);
+
   const [isPending, startTransition] = useTransition();
-  const [state, formAction] = useActionState(createTaskAction, null);
+  const [state, formAction] = useActionState(
+    id ? updateTaskWithId : createTaskAction,
+    null,
+  );
 
   useEffect(() => {
     if (state?.success) {
-      toast.success("Task created successfully");
+      toast.success("Success");
+      onModalClose();
     } else {
       toast.error(state?.error);
     }
-  }, [state]);
+  }, [state, onModalClose]);
 
-  const handleCreateTask = (data: ITask) => {
+  const handleSubmitTask = (data: TaskSchemaType) => {
     startTransition(() => {
       const formData = new FormData();
 
@@ -31,35 +41,7 @@ export const useCreateTaskAction = () => {
       formAction(formData);
     });
   };
-  return { state, handleCreateTask, isPending };
-};
-
-export const useUpdateTaskAction = (id: number) => {
-  const updateTaskWithId = updateTaskAction.bind(null, id);
-
-  const [isPending, startTransition] = useTransition();
-  const [state, formAction] = useActionState(updateTaskWithId, null);
-
-  useEffect(() => {
-    if (state?.success) {
-      toast.success("Task updated successfully");
-    } else {
-      toast.error(state?.error);
-    }
-  }, [state]);
-
-  const handleUpdateTask = (data: ITask) => {
-    startTransition(() => {
-      const formData = new FormData();
-
-      Object.entries(data).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-
-      formAction(formData);
-    });
-  };
-  return { state, handleUpdateTask, isPending };
+  return { state, handleSubmitTask, isPending };
 };
 
 export const useArchiveTaskAction = (id: number) => {

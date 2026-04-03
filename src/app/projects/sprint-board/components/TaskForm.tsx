@@ -15,17 +15,22 @@ import {
   TaskPriorityOptions,
   TaskStatusOptions,
 } from "../data/data";
-import { useCreateTaskAction } from "../hooks/useHandleActions";
 import { TaskSchema, TaskSchemaType } from "../validation/board.validation";
+import { useAssigneeOptions } from "../hooks/useAssigneeOptions";
+import { ITask } from "../types/interfaces";
+import { useHandleTaskSubmitAction } from "../hooks/useHandleActions";
 
 interface IProps {
   title?: string;
   type?: "add" | "edit";
+  task?: ITask;
   handleModalClose: () => void;
 }
 
 const TaskForm: React.FC<IProps> = ({
   title = "Create New Task",
+  type = "add",
+  task,
   handleModalClose,
 }) => {
   const {
@@ -37,22 +42,25 @@ const TaskForm: React.FC<IProps> = ({
     resolver: zodResolver(TaskSchema),
     mode: "onChange",
     defaultValues: {
-      title: "",
-      description: "",
-      status: "",
-      priority: "",
-      assignee: "",
-      category: "",
-      startDate: "",
-      endDate: "",
+      title: task?.title || "",
+      description: task?.description || "",
+      status: task?.status || "",
+      priority: task?.priority || "",
+      assignee: task?.assigneeId?.toString() || "",
+      category: task?.category || "",
+      startDate: task?.startDate || "",
+      dueDate: task?.dueDate || "",
     },
   });
 
-  const { handleCreateTask, isPending } = useCreateTaskAction();
+  const { handleSubmitTask, isPending } = useHandleTaskSubmitAction(
+    task?.id,
+    handleModalClose,
+  );
+  const assigneeOptions = useAssigneeOptions();
 
   const onSubmit = (data: TaskSchemaType) => {
-    console.log(data); // <-- all fields will be logged correctly
-    // handleCreateTask(data);
+    handleSubmitTask(data);
   };
 
   return (
@@ -120,7 +128,7 @@ const TaskForm: React.FC<IProps> = ({
                   {...field}
                   label="Assignee"
                   placeholder="Select assignee..."
-                  options={TaskCategoryOptions}
+                  options={assigneeOptions}
                   value={field.value}
                   onValueChange={field.onChange}
                   error={errors.assignee?.message}
@@ -165,7 +173,7 @@ const TaskForm: React.FC<IProps> = ({
 
             {/* End Date */}
             <Controller
-              name="endDate"
+              name="dueDate"
               control={control}
               render={({ field }) => (
                 <DateField
@@ -176,7 +184,7 @@ const TaskForm: React.FC<IProps> = ({
                   }
                   label="End Date"
                   placeholder="Select date..."
-                  error={errors.endDate?.message}
+                  error={errors.dueDate?.message}
                 />
               )}
             />
@@ -189,7 +197,11 @@ const TaskForm: React.FC<IProps> = ({
             Cancel
           </Button>
           <Button type="submit" disabled={isPending || !isValid}>
-            {isPending ? "Creating..." : "Create Task"}
+            {isPending
+              ? "Processing..."
+              : type === "edit"
+              ? "Update Task"
+              : "Create Task"}
           </Button>
         </div>
       </form>

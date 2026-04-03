@@ -7,8 +7,8 @@ export const TaskSchema = z.object({
   priority: z.string().min(1, "Priority is required"),
   assignee: z.string().min(1, "Assignee is required"),
   category: z.string().min(1, "Category is required"),
-  startDate: z.string().min(1, "Start date is required"),
-  endDate: z.string().min(1, "End date is required"),
+  startDate: z.string().optional(),
+  dueDate: z.string().min(1, "Due date is required"),
 });
 
 export type TaskSchemaType = z.infer<typeof TaskSchema>;

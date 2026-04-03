@@ -35,7 +35,7 @@ export const createTaskAction = async (prev: unknown, formData: FormData) => {
 
 // update task action
 export const updateTaskAction = async (
-  id: number,
+  id: number | undefined,
   prev: unknown,
   formData: FormData,
 ) => {
@@ -68,6 +68,9 @@ export const updateTaskAction = async (
 
   task.updatedAt = new Date().toISOString();
 
+  if (!id) {
+    return { success: false, error: "Task ID is required" };
+  }
   const response = await updateTask(id, task);
   if (response.success) {
     revalidatePath("/projects/sprint-board");
