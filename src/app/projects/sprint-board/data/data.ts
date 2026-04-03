@@ -86,10 +86,10 @@ export const TaskCategoryOptions: ITaskOption[] = [
 ];
 
 export const tableHeaders = [
-  "Name",
-  "Assignee",
-  "Priority",
-  "Start",
-  "Due",
-  "Category",
+  "name",
+  "assignee",
+  "priority",
+  "start",
+  "due",
+  "category",
 ];

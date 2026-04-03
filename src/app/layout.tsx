@@ -43,7 +43,7 @@ export default function RootLayout({
           {/* navbar */}
           <Navbar />
           {/* main content */}
-          <main className="flex-1 md:ps-60">{children}</main>
+          <main className="flex-1 md:ps-60 min-w-0">{children}</main>
         </MswProvider>
       </body>
     </html>
