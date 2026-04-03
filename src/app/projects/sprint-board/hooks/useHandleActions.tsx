@@ -26,7 +26,7 @@ export const useHandleTaskSubmitAction = (
       toast.success("Success");
       onModalClose();
     } else {
-      toast.error(state?.error);
+      toast.error(state?.error?.toString());
     }
   }, [state, onModalClose]);
 
@@ -54,7 +54,7 @@ export const useArchiveTaskAction = (id: number | undefined) => {
     if (state?.success) {
       toast.success("Task archived successfully");
     } else {
-      toast.error(state?.error);
+      toast.error(state?.error?.toString());
     }
   }, [state]);
 
