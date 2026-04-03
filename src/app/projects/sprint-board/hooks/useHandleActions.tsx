@@ -44,7 +44,7 @@ export const useHandleTaskSubmitAction = (
   return { state, handleSubmitTask, isPending };
 };
 
-export const useArchiveTaskAction = (id: number) => {
+export const useArchiveTaskAction = (id: number | undefined) => {
   const archiveTaskWithId = archiveTaskAction.bind(null, id);
 
   const [isPending, startTransition] = useTransition();
