@@ -2,8 +2,9 @@
 
 import React from "react";
 import { Button } from "@/components/ui/Button";
-import { ChevronLeft, ChevronRight } from "@/components/icons";
 import { useSearchTasks } from "../hooks/useSearchTasks";
+import SvgChevronLeft from "./../../../../components/icons/ChevronLeft";
+import SvgChevronRight from "@/components/icons/ChevronRight";
 
 interface PaginationProps {
   totalPages: number;
@@ -24,7 +25,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages }) => {
         disabled={currentPage === 1}
         onClick={() => handlePageChange(currentPage - 1)}
       >
-        <ChevronLeft className="size-4" />
+        <SvgChevronLeft className="size-4" />
       </Button>
 
       {pages.map((page) => (
@@ -45,7 +46,7 @@ const Pagination: React.FC<PaginationProps> = ({ totalPages }) => {
         disabled={currentPage === totalPages}
         onClick={() => handlePageChange(currentPage + 1)}
       >
-        <ChevronRight className="size-4" />
+        <SvgChevronRight className="size-4" />
       </Button>
     </div>
   );
