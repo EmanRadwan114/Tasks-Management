@@ -60,7 +60,7 @@ const TaskCommentForm: React.FC<IProps> = ({
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Write a comment..."
             rows={4}
-            className="min-h-[100px] resize-y rounded-[10px] border border-secondary-background bg-muted-background/50 px-3.5 py-3 text-size-sm text-secondary-foreground placeholder:text-muted-foreground shadow-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+            className="min-h-25 resize-y rounded-[10px] border border-secondary-background bg-muted-background/50 px-3.5 py-3 text-size-sm text-secondary-foreground placeholder:text-muted-foreground shadow-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
             disabled={isPending}
           />
           <div className="flex justify-end pt-0.5">

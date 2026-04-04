@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Calendar, Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
 import { IDisplayTask } from "../../types/interfaces";
@@ -15,7 +14,12 @@ import { TTaskStatus } from "../../types/types";
 import TaskForm from "../TaskForm";
 import ArchiveModal from "../ArchiveModal";
 import { useTaskActions } from "../../hooks/useTaskActions";
-import { PriorityIcon } from "@/components/icons";
+import {
+  CalendarIcon,
+  EditIcon,
+  PriorityIcon,
+  TrashIcon,
+} from "@/components/icons";
 
 interface IProps {
   displayTask: IDisplayTask;
@@ -38,8 +42,8 @@ const TaskViewHeader: React.FC<IProps> = ({ displayTask, taskRef }) => {
 
   return (
     <>
-      <header className="space-y-5">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+      <header className="space-y-3 px-2 sm:px-7">
+        <div className="flex flex-col gap-3.5 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-center gap-3 min-w-0">
             <div className="shrink-0 rounded-lg size-9 flex items-center justify-center text-white text-size-sm font-bold bg-primary shadow-sm">
               {task.taskInitials}
@@ -52,25 +56,25 @@ const TaskViewHeader: React.FC<IProps> = ({ displayTask, taskRef }) => {
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-3.5 rounded-lg border-secondary-background bg-primary-background text-secondary-foreground hover:bg-muted-background"
+              className="px-2.5 py-1.25 rounded-[6px] border-secondary-background bg-white text-secondary-foreground hover:bg-muted-background"
               onClick={() => handleEditClick(task)}
             >
-              <Pencil className="size-3.5" />
+              <EditIcon className="size-3.5" />
               Edit
             </Button>
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-3.5 rounded-lg border-secondary-background bg-primary-background text-danger-foreground hover:bg-danger-background/20 hover:text-danger-foreground"
+              className="px-2.5 py-1.25 rounded-[6px] border-secondary-background bg-white  hover:bg-muted-background text-danger-foreground"
               onClick={handleArchiveClick}
             >
-              <Trash2 className="size-3.5" />
+              <TrashIcon className="size-3.5" />
               Archive
             </Button>
           </div>
         </div>
 
-        <h1 className="text-[22px] sm:text-2xl md:text-[26px] font-bold text-secondary-foreground leading-snug tracking-tight pr-1">
+        <h1 className="text-xl font-bold text-secondary-foreground leading-snug tracking-tight">
           {task.title}
         </h1>
 
@@ -78,7 +82,7 @@ const TaskViewHeader: React.FC<IProps> = ({ displayTask, taskRef }) => {
           {status && (
             <Badge
               variant="outline"
-              className={`${getTaskStatusColor(status)} border-0 gap-1.5 h-7 px-3 rounded-full font-medium`}
+              className={`${getTaskStatusColor(status)} border-0`}
             >
               <span
                 className="size-1.5 rounded-full bg-current opacity-90"
@@ -90,7 +94,7 @@ const TaskViewHeader: React.FC<IProps> = ({ displayTask, taskRef }) => {
           {task.priority && (
             <Badge
               variant="outline"
-              className="border-0 gap-1.5 h-7 px-3 rounded-full font-medium bg-warning-background/90 text-warning-foreground"
+              className="border border-secondary-background text-secondary-foreground"
             >
               <PriorityIcon
                 className={`size-3 ${getPriorityColor(task.priority)}`}
@@ -101,20 +105,16 @@ const TaskViewHeader: React.FC<IProps> = ({ displayTask, taskRef }) => {
           {task.dueDate && (
             <Badge
               variant="outline"
-              className={`border-0 gap-1.5 h-7 px-3 rounded-full font-medium ${
-                task.isTaskLate
-                  ? "bg-danger-background text-danger-foreground"
-                  : "bg-danger-background/50 text-secondary-foreground"
-              }`}
+              className={`border border-secondary-background text-secondary-foreground`}
             >
-              <Calendar className="size-3.5 text-danger-foreground shrink-0" />
-              Due {task.displayedDueDate}
+              <CalendarIcon className="size-3 text-danger-foreground shrink-0" />
+              Due <span className="font-bold">{task.displayedDueDate}</span>
             </Badge>
           )}
           {task.category && (
             <Badge
               variant="outline"
-              className={`${getCategoryColor(task.category)} border-0 h-7 px-3 rounded-full font-medium capitalize`}
+              className={`${getCategoryColor(task.category)} border-0`}
             >
               {task.category}
             </Badge>

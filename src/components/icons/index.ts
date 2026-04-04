@@ -7,6 +7,7 @@ export { default as ChevronDown } from "./ChevronDown";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as DashboardIcon } from "./DashboardIcon";
 export { default as DotsIcon } from "./DotsIcon";
+export { default as EditIcon } from "./EditIcon";
 export { default as EyeIcon } from "./EyeIcon";
 export { default as FilterIcon } from "./FilterIcon";
 export { default as InboxIcon } from "./InboxIcon";
@@ -23,9 +24,5 @@ export { default as SettingsIcon } from "./SettingsIcon";
 export { default as SprintIcon } from "./SprintIcon";
 export { default as TasksIcon } from "./TasksIcon";
 export { default as TimelineIcon } from "./TimelineIcon";
+export { default as TrashIcon } from "./TrashIcon";
 export { default as UsersIcon } from "./UsersIcon";
-export { default as EditIcon } from "./EditIcon";
-export { default as ArchiveIcon } from "./ArchiveIcon";
-export { default as ChevronLeft } from "./ChevronLeft";
-export { default as ChevronRight } from "./ChevronRight";
-

@@ -76,12 +76,7 @@ interface IProps {
   users: IUser[];
 }
 
-const TaskActivity: React.FC<IProps> = ({
-  taskId,
-  task,
-  comments,
-  users,
-}) => {
+const TaskActivity: React.FC<IProps> = ({ taskId, task, comments, users }) => {
   const [filter, setFilter] = useState<ActivityFilter>("all");
 
   const assignee = task.assignee;
@@ -106,19 +101,13 @@ const TaskActivity: React.FC<IProps> = ({
         kind: "system",
         id: "created",
         at: task.createdAt,
-        message: assignee
-          ? `Task created by ${assignee.name}`
-          : "Task created",
+        message: assignee ? `Task created by ${assignee.name}` : "Task created",
         author: assignee,
         variant: "created",
       });
     }
 
-    if (
-      task.updatedAt &&
-      task.createdAt &&
-      task.updatedAt !== task.createdAt
-    ) {
+    if (task.updatedAt && task.createdAt && task.updatedAt !== task.createdAt) {
       const created = new Date(task.createdAt).getTime();
       const updated = new Date(task.updatedAt).getTime();
       if (updated > created + 30_000) {
@@ -128,15 +117,12 @@ const TaskActivity: React.FC<IProps> = ({
           at: task.updatedAt,
           message: "",
           author: assignee,
-          variant:
-            assignee && status ? "status_change" : "generic",
+          variant: assignee && status ? "status_change" : "generic",
         });
       }
     }
 
-    items.sort(
-      (a, b) => new Date(b.at).getTime() - new Date(a.at).getTime(),
-    );
+    items.sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
 
     return items;
   }, [comments, task, users, assignee, status]);
@@ -155,7 +141,7 @@ const TaskActivity: React.FC<IProps> = ({
     task.assigneeColor ?? colorForUser(users[0] ?? { name: "?", email: "" });
 
   return (
-    <section className="space-y-5">
+    <section className="space-y-5 px-2 sm:px-7">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           <h2 className="text-size-md font-semibold text-secondary-foreground">
@@ -166,7 +152,7 @@ const TaskActivity: React.FC<IProps> = ({
           </span>
         </div>
         <div
-          className="inline-flex rounded-[10px] border border-secondary-background bg-muted-background p-1 gap-0.5 self-start sm:self-auto shadow-[inset_0_1px_2px_rgba(15,23,42,0.04)]"
+          className="inline-flex gap-2 self-start sm:self-auto"
           role="tablist"
           aria-label="Activity filter"
         >
@@ -179,10 +165,10 @@ const TaskActivity: React.FC<IProps> = ({
               variant="ghost"
               size="sm"
               className={cn(
-                "h-8 px-3.5 text-size-xs rounded-lg font-medium transition-colors",
+                "px-2.5! py-0.5! text-size-xs rounded-[6px] font-medium transition-colors",
                 filter === tab.id
                   ? "bg-primary text-white shadow-sm hover:bg-primary hover:text-white"
-                  : "text-tertiary-foreground hover:text-secondary-foreground hover:bg-transparent",
+                  : "text-tertiary-foreground border border-secondary-background hover:text-secondary-foreground hover:bg-transparent",
               )}
               onClick={() => setFilter(tab.id)}
             >
@@ -195,7 +181,7 @@ const TaskActivity: React.FC<IProps> = ({
       <div className="relative">
         {filtered.length > 0 && (
           <div
-            className="pointer-events-none absolute left-[17px] top-3 bottom-3 w-px bg-secondary-background"
+            className="pointer-events-none absolute left-4.25 top-3 bottom-5 w-px bg-secondary-background"
             aria-hidden
           />
         )}
@@ -207,12 +193,14 @@ const TaskActivity: React.FC<IProps> = ({
             </li>
           ) : (
             filtered.map((item) => (
-              <li key={item.id} className="relative flex gap-4">
+              <li key={item.id} className="relative flex gap-2">
                 {item.kind === "comment" ? (
                   <>
-                    <div className="relative z-[1] flex w-9 shrink-0 justify-center">
+                    <div className="relative z-1 flex w-9 shrink-0 justify-center">
                       <div
-                        className={`mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full text-size-xs font-bold text-white ring-4 ring-primary-background ${colorForUser(item.author)}`}
+                        className={`mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full text-[9px] text-white ${colorForUser(
+                          item.author,
+                        )}`}
                       >
                         {initialsForUser(item.author)}
                       </div>
@@ -238,15 +226,17 @@ const TaskActivity: React.FC<IProps> = ({
                   </>
                 ) : (
                   <>
-                    <div className="relative z-[1] flex w-9 shrink-0 justify-center pt-1.5">
-                      <span className="size-2.5 rounded-full bg-tertiary-foreground/35 ring-[3px] ring-primary-background" />
+                    <div className="w-9 flex justify-center ">
+                      <div className="relative z-1 flex items-center justify-center size-6 rounded-[12px] bg-default-background">
+                        <span className="size-2 rounded-full border border-tertiary-foreground/35" />
+                      </div>
                     </div>
                     <div className="min-w-0 flex-1 text-size-sm leading-relaxed text-secondary-foreground pt-0.5">
                       {item.variant === "status_change" &&
                       assignee &&
                       status ? (
                         <p>
-                          <span className="font-semibold text-secondary-foreground">
+                          <span className="text-size-xs text-secondary-foreground">
                             {assignee.name}
                           </span>
                           <span className="text-tertiary-foreground">
@@ -255,7 +245,9 @@ const TaskActivity: React.FC<IProps> = ({
                           </span>
                           <Badge
                             variant="outline"
-                            className={`${getTaskStatusColor(status)} mx-0.5 inline-flex h-6 align-middle border-0 px-2.5 text-size-xs font-medium`}
+                            className={`${getTaskStatusColor(
+                              status,
+                            )} mx-0.5 inline-flex h-6 align-middle border-0 px-2.5 text-size-xs font-medium`}
                           >
                             {formatLabelFromSlug(status)}
                           </Badge>

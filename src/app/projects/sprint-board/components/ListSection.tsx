@@ -103,7 +103,7 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
                       {task.title}
                     </Link>
                   </h3>
-                  <p className="text-muted-foreground text-size-xs font-normal line-clamp-2">
+                  <p className="text-muted-foreground text-size-xs font-normal line-clamp-2 truncate max-w-35">
                     {task.description}
                   </p>
                 </div>

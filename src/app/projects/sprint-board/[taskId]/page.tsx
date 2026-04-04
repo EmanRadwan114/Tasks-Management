@@ -24,7 +24,7 @@ export default async function SprintTaskDetailPage({
   }
 
   return (
-    <section className="bg-white min-h-[80vh] flex flex-col pt-2 px-2 sm:px-7 pb-12">
+    <section className="bg-white min-h-[80vh] flex flex-col">
       <TaskView
         taskId={id}
         displayTask={displayTask}

@@ -25,7 +25,7 @@ const TaskDescriptionSection: React.FC<IProps> = ({ description }) => {
   const criteriaPart = parts[1]?.trim();
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-4 border-y border-secondary-background py-7 px-2 sm:px-7">
       <h2 className="text-size-md font-semibold text-secondary-foreground">
         Description
       </h2>

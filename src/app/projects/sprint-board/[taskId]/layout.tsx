@@ -27,9 +27,7 @@ export default async function SprintTaskDetailLayout({
   return (
     <>
       <ProjectsHeader displayTask={displayTask} />
-      <section className="pt-3 bg-muted-background space-y-4 sm:space-y-0">
-        {children}
-      </section>
+      <section className="bg-white space-y-4 sm:space-y-0">{children}</section>
     </>
   );
 }

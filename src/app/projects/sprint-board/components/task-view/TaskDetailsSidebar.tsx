@@ -25,13 +25,11 @@ function DetailRow({
   className?: string;
 }) {
   return (
-    <div
-      className={`flex flex-row items-center justify-between gap-4 py-2.5 min-h-[44px] ${className}`}
-    >
-      <span className="text-size-xs text-tertiary-foreground shrink-0 w-[88px] sm:w-[100px]">
+    <div className={`flex flex-col gap-1.5 ${className}`}>
+      <span className="text-size-xs text-muted-foreground font-medium">
         {label}
       </span>
-      <div className="text-size-sm text-secondary-foreground text-right min-w-0 flex-1 flex justify-end items-center">
+      <div className="text-size-sm text-secondary-foreground text-right min-w-0 flex-1 flex items-center">
         {children}
       </div>
     </div>
@@ -65,78 +63,86 @@ const TaskDetailsSidebar: React.FC<IProps> = ({ displayTask }) => {
   };
 
   return (
-    <aside className="w-full xl:w-[300px] shrink-0 xl:sticky xl:top-4 rounded-xl border border-secondary-background bg-muted-background/80 p-5 sm:p-6 shadow-[0_1px_3px_rgba(15,23,42,0.04)]">
-      <h2 className="text-size-md font-semibold text-secondary-foreground mb-1">
+    <aside className="w-full h-full shrink-0 border-s border-secondary-background">
+      <h2 className="text-size-md font-semibold text-secondary-foreground mb-1 border-b border-secondary-background py-4 px-5">
         Details
       </h2>
 
-      <div className="divide-y divide-secondary-background">
-        {status && (
-          <DetailRow label="Status">
-            <Badge
-              variant="outline"
-              className={`${getTaskStatusColor(status)} border-0 gap-1.5 h-7 px-2.5 rounded-full font-medium w-fit`}
-            >
-              <span
-                className="size-1.5 rounded-full bg-current opacity-90"
-                aria-hidden
-              />
-              {formatLabelFromSlug(status)}
-            </Badge>
-          </DetailRow>
-        )}
-
-        {task.priority && (
-          <DetailRow label="Priority">
-            <div className="flex items-center justify-end gap-2">
-              <PriorityIcon
-                className={`size-3.5 shrink-0 ${getPriorityColor(task.priority)}`}
-              />
-              <span className="capitalize font-medium">{task.priority}</span>
-            </div>
-          </DetailRow>
-        )}
-
-        <DetailRow label="Assignee">
-          {task.assignee ? (
-            <div className="flex items-center justify-end gap-2.5">
-              <div
-                className={`rounded-full size-8 flex items-center justify-center text-white text-size-xs font-bold shrink-0 ${task.assigneeColor}`}
+      <div className="divide-y divide-secondary-background px-5">
+        <div className="space-y-5 py-5">
+          {status && (
+            <DetailRow label="Status">
+              <Badge
+                variant="outline"
+                className={`${getTaskStatusColor(status)} border-0`}
               >
-                {task.assigneeInitials}
-              </div>
-              <span className="font-medium truncate max-w-[140px]">
-                {task.assignee.name}
-              </span>
-            </div>
-          ) : (
-            <span className="text-tertiary-foreground">Unassigned</span>
+                <span
+                  className="size-1.5 rounded-full bg-current opacity-90"
+                  aria-hidden
+                />
+                {formatLabelFromSlug(status)}
+              </Badge>
+            </DetailRow>
           )}
-        </DetailRow>
 
-        {task.category && (
-          <DetailRow label="Category">
-            <Badge
-              variant="outline"
-              className={`${getCategoryColor(task.category)} border-0 w-fit capitalize rounded-full px-2.5 h-7 font-medium`}
-            >
-              {task.category}
-            </Badge>
+          {task.priority && (
+            <DetailRow label="Priority">
+              <div className="flex items-center  gap-2">
+                <PriorityIcon
+                  className={`size-3.5 shrink-0 ${getPriorityColor(
+                    task.priority,
+                  )}`}
+                />
+                <span className="capitalize">{task.priority}</span>
+              </div>
+            </DetailRow>
+          )}
+
+          <DetailRow label="Assignee">
+            {task.assignee ? (
+              <div className="flex items-center  gap-2.5">
+                <div
+                  className={`rounded-full size-6 flex items-center justify-center text-white text-[9px] font-medium shrink-0 ${task.assigneeColor}`}
+                >
+                  {task.assigneeInitials}
+                </div>
+                <span className="truncate max-w-35">{task.assignee.name}</span>
+              </div>
+            ) : (
+              <span className="text-tertiary-foreground">Unassigned</span>
+            )}
           </DetailRow>
-        )}
 
-        <DetailRow label="Start date">
-          <span className="font-medium tabular-nums">{longDate(task.startDate)}</span>
-        </DetailRow>
-        <DetailRow label="Due date">
-          <span className="font-medium tabular-nums">{longDate(task.dueDate)}</span>
-        </DetailRow>
-        <DetailRow label="Created">
-          <span className="font-medium tabular-nums">{longDate(task.createdAt)}</span>
-        </DetailRow>
-        <DetailRow label="Updated">
-          <span className="font-medium">{relative(task.updatedAt)}</span>
-        </DetailRow>
+          {task.category && (
+            <DetailRow label="Category">
+              <Badge
+                variant="outline"
+                className={`${getCategoryColor(task.category)} border-0 py-0.5`}
+              >
+                {task.category}
+              </Badge>
+            </DetailRow>
+          )}
+        </div>
+
+        <div className="space-y-5 py-5">
+          <DetailRow label="Start date">
+            <span className="tabular-nums">{longDate(task.startDate)}</span>
+          </DetailRow>
+          <DetailRow label="Due date">
+            <span className="tabular-nums">{longDate(task.dueDate)}</span>
+          </DetailRow>
+          <DetailRow label="Created">
+            <span className="tabular-nums text-tertiary-foreground">
+              {longDate(task.createdAt)}
+            </span>
+          </DetailRow>
+          <DetailRow label="Updated">
+            <span className="text-tertiary-foreground">
+              {relative(task.updatedAt)}
+            </span>
+          </DetailRow>
+        </div>
       </div>
     </aside>
   );

@@ -26,11 +26,9 @@ const TaskView: React.FC<IProps> = ({
     <>
       <HydrateAssignees assignees={users} />
       <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_300px] xl:gap-10 gap-8 items-start">
-        <article className="space-y-7 sm:space-y-8">
+        <article className="space-y-5 sm:space-y-6 py-7">
           <TaskViewHeader displayTask={displayTask} taskRef={taskRef} />
-          <div className="h-px w-full bg-secondary-background" aria-hidden />
           <TaskDescriptionSection description={displayTask.description} />
-          <div className="h-px w-full bg-secondary-background" aria-hidden />
           <TaskActivity
             taskId={taskId}
             task={displayTask}
