@@ -5,8 +5,9 @@ import {
   fetchTasks,
   fetchUsers,
 } from "../services/board.services";
-import { IDisplayTask, ITask, IUser } from "../types/interfaces";
+import { IComment, IDisplayTask, ITask, IUser } from "../types/interfaces";
 import { TTaskCategory, TTaskPriority, TTaskStatus } from "../types/types";
+import { brandColors } from "../data/data";
 
 export const fetchBoardData = async (
   search?: string,
@@ -298,3 +299,25 @@ export const getTaskStatusColor = (status?: TTaskStatus, checked?: boolean) => {
       }`;
   }
 };
+
+export function authorForComment(comment: IComment, users: IUser[]): IUser {
+  if (!users.length) {
+    return { name: "Collaborator", email: "" };
+  }
+  const idx = Math.abs((comment.id ?? 0) % users.length);
+  return users[idx]!;
+}
+
+export function initialsForUser(user: IUser) {
+  return user.name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+export function colorForUser(user: IUser) {
+  const idx = Math.abs((user.id ?? 0) % brandColors.length);
+  return brandColors[idx];
+}

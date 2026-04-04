@@ -56,19 +56,19 @@ const TaskViewHeader: React.FC<IProps> = ({ displayTask, taskRef }) => {
             <Button
               variant="outline"
               size="sm"
-              className="px-2.5 py-1.25 rounded-[6px] border-secondary-background bg-white text-secondary-foreground hover:bg-muted-background"
+              className="px-2.5 py-1.25 rounded-[6px] border-secondary-background bg-white text-secondary-foreground hover:bg-muted-background font-normal!"
               onClick={() => handleEditClick(task)}
             >
-              <EditIcon className="size-3.5" />
+              <EditIcon className="size-3" />
               Edit
             </Button>
             <Button
               variant="outline"
               size="sm"
-              className="px-2.5 py-1.25 rounded-[6px] border-secondary-background bg-white  hover:bg-muted-background text-danger-foreground"
+              className="px-2.5 py-1.25 rounded-[6px] border-secondary-background bg-white  hover:bg-muted-background text-danger-foreground font-normal!"
               onClick={handleArchiveClick}
             >
-              <TrashIcon className="size-3.5" />
+              <TrashIcon className="size-3" />
               Archive
             </Button>
           </div>

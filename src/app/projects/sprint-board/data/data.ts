@@ -14,7 +14,12 @@ import {
   OptionsIcons,
   UsersIcon,
 } from "@/components/icons";
-import { TTaskCategory, TTaskPriority, TTaskStatus } from "../types/types";
+import {
+  ActivityFilter,
+  TTaskCategory,
+  TTaskPriority,
+  TTaskStatus,
+} from "../types/types";
 
 export const boardNavsItems: IBoardNavsItems[] = [
   {
@@ -92,4 +97,18 @@ export const tableHeaders = [
   "start",
   "due",
   "category",
+];
+
+export const brandColors = [
+  "bg-brand-orange",
+  "bg-brand-yellow",
+  "bg-brand-blue",
+  "bg-brand-red",
+  "bg-brand-green",
+  "bg-primary",
+];
+export const filterTabs: { id: ActivityFilter; label: string }[] = [
+  { id: "all", label: "All" },
+  { id: "comments", label: "Comments" },
+  { id: "history", label: "History" },
 ];

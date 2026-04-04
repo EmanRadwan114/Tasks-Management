@@ -28,7 +28,9 @@ const NavSection: React.FC<IProps> = ({ title, items, icon: Icon }) => {
       <ul className="flex flex-col gap-y-0.5">
         {items.map((item) => {
           const Icon = item.icon;
-          const isActive = item.href === `/${pathname.split("/").pop()}`;
+          const isActive =
+            item.href === `/${pathname.split("/").pop()}` ||
+            item.href === pathname;
           return (
             <li key={item.title}>
               <Link

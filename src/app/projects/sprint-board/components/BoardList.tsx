@@ -79,7 +79,7 @@ const BoardList: React.FC<IProps> = ({ users, tasks: allTasks }) => {
       {/* task stats */}
       <div className="px-2 sm:px-7 py-4 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mt-auto">
         <span className="text-size-sm text-tertiary-foreground font-medium">
-          {allTasks?.totalTasks || tasks?.length} tasks
+          {tasks?.length} tasks
         </span>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           {/* in progress */}

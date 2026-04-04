@@ -1,73 +1,20 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { IComment, IDisplayTask, IUser } from "../../types/interfaces";
 import {
+  colorForUser,
   formatLabelFromSlug,
   getTaskStatusColor,
+  initialsForUser,
 } from "../../utils/board-helpers";
-import { TTaskStatus } from "../../types/types";
 import TaskCommentForm from "./TaskCommentForm";
-
-type ActivityFilter = "all" | "comments" | "history";
-
-type TimelineItem =
-  | {
-      kind: "comment";
-      id: string;
-      at: string;
-      message: string;
-      author: IUser;
-    }
-  | {
-      kind: "system";
-      id: string;
-      at: string;
-      message: string;
-      author?: IUser;
-      variant: "created" | "status_change" | "generic";
-    };
-
-function authorForComment(comment: IComment, users: IUser[]): IUser {
-  if (!users.length) {
-    return { name: "Collaborator", email: "" };
-  }
-  const idx = Math.abs((comment.id ?? 0) % users.length);
-  return users[idx]!;
-}
-
-function initialsForUser(user: IUser) {
-  return user.name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
-
-const brandColors = [
-  "bg-brand-orange",
-  "bg-brand-yellow",
-  "bg-brand-blue",
-  "bg-brand-red",
-  "bg-brand-green",
-  "bg-primary",
-];
-
-function colorForUser(user: IUser) {
-  const idx = Math.abs((user.id ?? 0) % brandColors.length);
-  return brandColors[idx];
-}
-
-const filterTabs: { id: ActivityFilter; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "comments", label: "Comments" },
-  { id: "history", label: "History" },
-];
+import { useHandleComments } from "../../hooks/useHandleComments";
+import { filterTabs } from "../../data/data";
 
 interface IProps {
   taskId: number;
@@ -77,68 +24,16 @@ interface IProps {
 }
 
 const TaskActivity: React.FC<IProps> = ({ taskId, task, comments, users }) => {
-  const [filter, setFilter] = useState<ActivityFilter>("all");
-
-  const assignee = task.assignee;
-  const status = task.status as TTaskStatus | undefined;
-
-  const timeline = useMemo(() => {
-    const items: TimelineItem[] = [];
-
-    for (const c of comments) {
-      const author = authorForComment(c, users);
-      items.push({
-        kind: "comment",
-        id: `c-${c.id ?? c.createdAt}`,
-        at: c.createdAt,
-        message: c.message,
-        author,
-      });
-    }
-
-    if (task.createdAt) {
-      items.push({
-        kind: "system",
-        id: "created",
-        at: task.createdAt,
-        message: assignee ? `Task created by ${assignee.name}` : "Task created",
-        author: assignee,
-        variant: "created",
-      });
-    }
-
-    if (task.updatedAt && task.createdAt && task.updatedAt !== task.createdAt) {
-      const created = new Date(task.createdAt).getTime();
-      const updated = new Date(task.updatedAt).getTime();
-      if (updated > created + 30_000) {
-        items.push({
-          kind: "system",
-          id: "updated",
-          at: task.updatedAt,
-          message: "",
-          author: assignee,
-          variant: assignee && status ? "status_change" : "generic",
-        });
-      }
-    }
-
-    items.sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime());
-
-    return items;
-  }, [comments, task, users, assignee, status]);
-
-  const filtered = useMemo(() => {
-    if (filter === "all") return timeline;
-    if (filter === "comments")
-      return timeline.filter((i) => i.kind === "comment");
-    return timeline.filter((i) => i.kind === "system");
-  }, [timeline, filter]);
-
-  const composerInitials =
-    task.assigneeInitials ??
-    initialsForUser(users[0] ?? { name: "?", email: "" });
-  const composerColor =
-    task.assigneeColor ?? colorForUser(users[0] ?? { name: "?", email: "" });
+  const {
+    filter,
+    setFilter,
+    filtered,
+    composerInitials,
+    composerColor,
+    timeline,
+    assignee,
+    status,
+  } = useHandleComments(task, comments, users);
 
   return (
     <section className="space-y-5 px-2 sm:px-7">
@@ -147,7 +42,7 @@ const TaskActivity: React.FC<IProps> = ({ taskId, task, comments, users }) => {
           <h2 className="text-size-md font-semibold text-secondary-foreground">
             Activity
           </h2>
-          <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-secondary-background px-1.5 text-size-xs font-medium text-tertiary-foreground tabular-nums">
+          <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted-background px-1.5 text-size-xs font-medium text-tertiary-foreground tabular-nums">
             {timeline.length}
           </span>
         </div>
@@ -181,14 +76,14 @@ const TaskActivity: React.FC<IProps> = ({ taskId, task, comments, users }) => {
       <div className="relative">
         {filtered.length > 0 && (
           <div
-            className="pointer-events-none absolute left-4.25 top-3 bottom-5 w-px bg-secondary-background"
+            className="pointer-events-none absolute left-4.25 top-3 h-1/2 w-px bg-secondary-background"
             aria-hidden
           />
         )}
 
         <ul className="relative space-y-8">
           {filtered.length === 0 ? (
-            <li className="rounded-xl border border-dashed border-secondary-background bg-muted-background/40 py-10 text-center text-size-sm text-tertiary-foreground">
+            <li className="rounded-xl border border-dashed border-secondary-background bg-muted-background py-10 text-center text-size-sm text-tertiary-foreground">
               Nothing to show for this filter yet.
             </li>
           ) : (
@@ -219,7 +114,7 @@ const TaskActivity: React.FC<IProps> = ({ taskId, task, comments, users }) => {
                           })}
                         </time>
                       </div>
-                      <div className="rounded-[10px] border border-secondary-background bg-muted-background/60 px-3.5 py-3 text-size-sm leading-relaxed text-secondary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+                      <div className="rounded-[10px] border border-secondary-background bg-muted-background px-3.5 py-3 text-size-sm leading-relaxed text-secondary-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
                         {item.message}
                       </div>
                     </div>
