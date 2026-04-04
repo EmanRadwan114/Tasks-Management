@@ -64,6 +64,7 @@ export interface ITasksResponse {
   page: number;
   limit: number;
   totalPages: number;
+  totalTasks?: number;
 }
 
 export interface IUsersResponse {

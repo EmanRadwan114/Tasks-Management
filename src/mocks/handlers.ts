@@ -68,15 +68,61 @@ export const handlers = [
     });
   }),
   // fetch all tasks
-  http.get("*/api/tasks", () => {
+  http.get("*/api/tasks", ({ request }) => {
+    const url = new URL(request.url);
+    const search = url.searchParams.get("search");
+    const status = url.searchParams.get("status");
+    const priority = url.searchParams.get("priority");
+    const assigneeId = url.searchParams.get("assigneeId");
+    const category = url.searchParams.get("category");
+    const page = Number(url.searchParams.get("page")) || 1;
+    const limit = Number(url.searchParams.get("limit")) || 10;
+
+    let filteredTasks = tasks;
+
+    if (search) {
+      filteredTasks = filteredTasks.filter(
+        (task) =>
+          task.title?.toLowerCase().includes(search.toLowerCase()) ||
+          task.description?.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
+
+    if (status) {
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    }
+
+    if (priority) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority === priority,
+      );
+    }
+
+    if (assigneeId) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.assigneeId === Number(assigneeId),
+      );
+    }
+
+    if (category) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.category === category,
+      );
+    }
+
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const paginatedTasks = filteredTasks.slice(start, end);
+
     return HttpResponse.json({
-      data: tasks,
+      data: paginatedTasks,
       status: 200,
       message: "Tasks fetched successfully",
       success: true,
-      page: 1,
-      limit: 10,
-      totalPages: Math.ceil(tasks.length / 10),
+      page,
+      limit,
+      totalPages: Math.ceil(filteredTasks.length / limit),
+      totalTasks: filteredTasks.length,
     });
   }),
   // archive task by id

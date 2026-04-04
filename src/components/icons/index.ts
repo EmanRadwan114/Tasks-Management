@@ -26,3 +26,6 @@ export { default as TimelineIcon } from "./TimelineIcon";
 export { default as UsersIcon } from "./UsersIcon";
 export { default as EditIcon } from "./EditIcon";
 export { default as ArchiveIcon } from "./ArchiveIcon";
+export { default as ChevronLeft } from "./ChevronLeft";
+export { default as ChevronRight } from "./ChevronRight";
+

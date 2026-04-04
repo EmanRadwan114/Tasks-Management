@@ -3,16 +3,21 @@ import { fetchTasks, fetchUsers } from "../services/board.services";
 import { IDisplayTask, ITask, IUser } from "../types/interfaces";
 import { TTaskCategory, TTaskPriority, TTaskStatus } from "../types/types";
 
-export const fetchBoardData = async () => {
+export const fetchBoardData = async (
+  search?: string,
+  page: number = 1,
+  limit: number = 10,
+  status?: string,
+  priority?: string,
+  assigneeId?: string,
+  category?: string,
+) => {
   await initMsw();
   try {
     const [users, tasks] = await Promise.allSettled([
       fetchUsers(),
-      fetchTasks(),
+      fetchTasks(search, page, limit, status, priority, assigneeId, category),
     ]);
-
-    console.log("users:", users);
-    console.log("tasks:", tasks);
 
     if (users.status === "fulfilled" && tasks.status === "fulfilled") {
       return {
