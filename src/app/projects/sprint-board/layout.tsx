@@ -1,5 +1,6 @@
 import BoardHeader from "./components/BoardHeader";
 import BoardNavs from "./components/BoardNavs";
+import { SearchTasksProvider } from "./hooks/useSearchTasks";
 
 export default function SprintBoardLayout({
   children,
@@ -13,7 +14,9 @@ export default function SprintBoardLayout({
       </div>
       <BoardNavs />
 
-      <div>{children}</div>
+      <SearchTasksProvider>
+        <div>{children}</div>
+      </SearchTasksProvider>
     </section>
   );
 }

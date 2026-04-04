@@ -1,8 +1,30 @@
 "use client";
+import {
+  createContext,
+  useContext,
+  useRef,
+  useTransition,
+  type ReactNode,
+} from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useTransition } from "react";
 
-export const useSearchTasks = () => {
+export type SearchTasksContextValue = {
+  handleSearch: (term: string) => void;
+  handleFilter: (key: string, value: string) => void;
+  clearFilters: () => void;
+  handlePageChange: (page: number) => void;
+  defaultValue: string;
+  currentStatus: string;
+  currentPriority: string;
+  currentAssigneeId: string;
+  currentCategory: string;
+  currentPage: number;
+  isPending: boolean;
+};
+
+const SearchTasksContext = createContext<SearchTasksContextValue | null>(null);
+
+function useSearchTasksState(): SearchTasksContextValue {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -82,4 +104,21 @@ export const useSearchTasks = () => {
     currentPage,
     isPending,
   };
+}
+
+export function SearchTasksProvider({ children }: { children: ReactNode }) {
+  const value = useSearchTasksState();
+  return (
+    <SearchTasksContext.Provider value={value}>
+      {children}
+    </SearchTasksContext.Provider>
+  );
+}
+
+export const useSearchTasks = (): SearchTasksContextValue => {
+  const ctx = useContext(SearchTasksContext);
+  if (!ctx) {
+    throw new Error("useSearchTasks must be used within SearchTasksProvider");
+  }
+  return ctx;
 };
