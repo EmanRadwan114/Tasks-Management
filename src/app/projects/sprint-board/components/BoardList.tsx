@@ -6,6 +6,7 @@ import { ITasksResponse, IUsersResponse } from "../types/interfaces";
 import { tasksWithAssignees } from "../utils/board-helpers";
 import { TTaskStatus } from "../types/types";
 import ListSection from "./ListSection";
+import Pagination from "./Pagination";
 
 interface IProps {
   users: IUsersResponse;
@@ -34,8 +35,8 @@ const BoardList: React.FC<IProps> = ({ users, tasks: allTasks }) => {
   const doneTasks = tasksWithAssignees(tasks, users?.data, TTaskStatus.DONE);
 
   return (
-    <section className="space-y-8">
-      <Table className="bg-white">
+    <section className=" pb-2">
+      <Table className="bg-white mb-8">
         {/* inprogress */}
         {inprogressTasks?.length > 0 && (
           <ListSection
@@ -73,7 +74,7 @@ const BoardList: React.FC<IProps> = ({ users, tasks: allTasks }) => {
       {/* task stats */}
       <div className="px-2 sm:px-7 py-4 bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <span className="text-size-sm text-tertiary-foreground font-medium">
-          {tasks?.length} tasks
+          {allTasks?.totalTasks || tasks?.length} tasks
         </span>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           {/* in progress */}
@@ -106,6 +107,7 @@ const BoardList: React.FC<IProps> = ({ users, tasks: allTasks }) => {
           </div>
         </div>
       </div>
+      <Pagination totalPages={allTasks?.totalPages} />
     </section>
   );
 };

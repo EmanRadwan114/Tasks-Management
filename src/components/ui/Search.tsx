@@ -10,6 +10,7 @@ interface SearchProps {
   Key?: ReactNode;
   wrapperClassName?: string;
   value?: string;
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -18,6 +19,7 @@ const Search: React.FC<SearchProps> = ({
   Key,
   wrapperClassName,
   value,
+  defaultValue,
   onChange,
 }) => {
   return (
@@ -29,6 +31,7 @@ const Search: React.FC<SearchProps> = ({
         type="text"
         placeholder={placeholder}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
       />
       {Key && <InputGroupAddon align="inline-end">{Key}</InputGroupAddon>}

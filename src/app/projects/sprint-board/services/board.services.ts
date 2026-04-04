@@ -19,8 +19,19 @@ export const addTask = async (task: ITask) => {
 };
 
 // fetch all tasks
-export const fetchTasks = async () => {
-  const response = await fetch(`${BASE_URL}/api/tasks`, {
+export const fetchTasks = async (
+  search?: string,
+  page: number = 1,
+  limit: number = 10,
+) => {
+  const url = new URL(`${BASE_URL}/api/tasks`);
+  if (search) {
+    url.searchParams.append("search", search);
+  }
+  url.searchParams.append("page", page.toString());
+  url.searchParams.append("limit", limit.toString());
+
+  const response = await fetch(url.toString(), {
     next: { revalidate: 60 * 10 },
   });
   if (!response.ok) throw new Error("Failed to fetch tasks");

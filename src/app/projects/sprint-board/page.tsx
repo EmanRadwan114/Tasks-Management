@@ -3,8 +3,15 @@ import BoardList from "./components/BoardList";
 import { fetchBoardData } from "./utils/board-helpers";
 import HydrateAssignees from "@/store/HydrateAssignees";
 
-async function SprintBoard() {
-  const boardData = await fetchBoardData();
+async function SprintBoard({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const search = (await searchParams).search as string;
+  const page = Number((await searchParams).page) || 1;
+  const limit = 4;
+  const boardData = await fetchBoardData(search, page, limit);
   return (
     <section>
       <HydrateAssignees assignees={boardData?.users?.data || []} />
