@@ -1,3 +1,5 @@
+import { IUser } from "./interfaces";
+
 export const enum TTaskStatus {
   BACKLOG = "backlog",
   IN_PROGRESS = "in-progress",
@@ -19,3 +21,22 @@ export const enum TTaskCategory {
   TESTING = "testing",
   DEVOPS = "devops",
 }
+
+export type ActivityFilter = "all" | "comments" | "history";
+
+export type TimelineItem =
+  | {
+      kind: "comment";
+      id: string;
+      at: string;
+      message: string;
+      author: IUser;
+    }
+  | {
+      kind: "system";
+      id: string;
+      at: string;
+      message: string;
+      author?: IUser;
+      variant: "created" | "status_change" | "generic";
+    };

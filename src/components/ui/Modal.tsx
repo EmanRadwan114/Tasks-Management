@@ -11,7 +11,7 @@ interface IProps {
 const Modal: React.FC<IProps> = ({ onClose, children, title }) => {
   return (
     <section
-      className="fixed inset-0 z-1000 flex items-center justify-center bg-black/50 p-2"
+      className="fixed inset-0 min-h-screen z-1000 flex items-center justify-center bg-black/50 p-2"
       onClick={onClose}
     >
       <div

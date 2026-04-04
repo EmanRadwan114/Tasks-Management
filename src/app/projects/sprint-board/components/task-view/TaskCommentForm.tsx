@@ -24,6 +24,7 @@ const TaskCommentForm: React.FC<IProps> = ({
   useEffect(() => {
     if (state == null) return;
     if (state.success) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMessage("");
     }
   }, [state]);
@@ -42,13 +43,10 @@ const TaskCommentForm: React.FC<IProps> = ({
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="rounded-[12px] border border-secondary-background bg-primary-background p-1 shadow-[inset_0_1px_2px_rgba(15,23,42,0.04)]"
-    >
-      <div className="flex gap-3 p-3 sm:p-4 sm:gap-4">
+    <form onSubmit={onSubmit}>
+      <div className="flex gap-3 pt-2">
         <div
-          className={`shrink-0 rounded-full size-9 flex items-center justify-center text-white text-size-xs font-bold ring-2 ring-primary-background ${composerColorClass}`}
+          className={`shrink-0 rounded-full size-7 flex items-center justify-center text-white text-size-xs  ${composerColorClass}`}
           aria-hidden
         >
           {composerInitials}
@@ -60,7 +58,7 @@ const TaskCommentForm: React.FC<IProps> = ({
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Write a comment..."
             rows={4}
-            className="min-h-25 resize-y rounded-[10px] border border-secondary-background bg-muted-background/50 px-3.5 py-3 text-size-sm text-secondary-foreground placeholder:text-muted-foreground shadow-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
+            className="min-h-32 resize-y rounded-[10px] border border-secondary-background bg-muted-background/50 px-3.5 py-3 text-size-sm text-secondary-foreground placeholder:text-muted-foreground shadow-none focus-visible:border-primary/40 focus-visible:ring-2 focus-visible:ring-primary/20"
             disabled={isPending}
           />
           <div className="flex justify-end pt-0.5">
