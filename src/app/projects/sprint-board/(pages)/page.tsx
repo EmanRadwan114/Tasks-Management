@@ -1,6 +1,6 @@
-import BoardActions from "./components/BoardActions";
-import BoardListWithPending from "./components/BoardListWithPending";
-import { fetchBoardData } from "./utils/board-helpers";
+import BoardActions from "../components/BoardActions";
+import BoardListWithPending from "../components/BoardListWithPending";
+import { fetchBoardData } from "../utils/board-helpers";
 import HydrateAssignees from "@/store/HydrateAssignees";
 
 async function SprintBoard({
@@ -27,10 +27,13 @@ async function SprintBoard({
   return (
     <section className="bg-muted-background min-h-[80vh] flex flex-col">
       <HydrateAssignees assignees={boardData?.users?.data || []} />
-      <div className="px-2 sm:px-7">
-        <BoardActions />
-      </div>
-      <BoardListWithPending users={boardData?.users} tasks={boardData?.tasks} />
+        <div className="px-2 sm:px-7">
+          <BoardActions />
+        </div>
+        <BoardListWithPending
+          users={boardData?.users}
+          tasks={boardData?.tasks}
+        />
     </section>
   );
 }

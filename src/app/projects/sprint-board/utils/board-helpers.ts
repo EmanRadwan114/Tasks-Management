@@ -49,8 +49,7 @@ export const fetchTaskDetailData = async (taskId: number) => {
       fetchUsers(),
     ]);
 
-    const taskPayload =
-      taskRes.status === "fulfilled" ? taskRes.value : null;
+    const taskPayload = taskRes.status === "fulfilled" ? taskRes.value : null;
     const task = taskPayload?.success ? taskPayload.data : null;
 
     const commentsPayload =
@@ -142,10 +141,13 @@ export const displayTaskForView = (
 };
 
 export const formatTaskRef = (task: ITask) => {
-  const prefix = task.category
-    ? task.category.replace(/-/g, "").slice(0, 4).toUpperCase()
-    : "TASK";
-  return `${prefix}-${task.id ?? ""}`;
+  let prefix = "TASK";
+  if (task?.category) {
+    const cat = task?.category.replace(/-/g, "");
+    prefix = cat.slice(0, 4).toUpperCase();
+  }
+
+  return `${prefix}-${task?.id ?? ""}`;
 };
 
 export const formatLabelFromSlug = (value?: string) => {

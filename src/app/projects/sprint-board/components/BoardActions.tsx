@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { boardNavsActions } from "../data/data";
 import { Button } from "@/components/ui/Button";
 import { useSearchTasks } from "../hooks/useSearchTasks";
@@ -8,6 +8,7 @@ import BoardFilters from "./BoardFilters";
 
 const BoardActions: React.FC = () => {
   const { handleSearch, defaultValue } = useSearchTasks();
+  const [value, setValue] = useState(defaultValue);
 
   return (
     <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-y-2.5 py-2.5">
@@ -35,9 +36,11 @@ const BoardActions: React.FC = () => {
         wrapperClassName="bg-white! flex-none w-fit"
         placeholder="Search Tasks..."
         defaultValue={defaultValue}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleSearch(e.target.value)
-        }
+        value={value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setValue(e.target.value);
+          handleSearch(e.target.value);
+        }}
       />
     </div>
   );

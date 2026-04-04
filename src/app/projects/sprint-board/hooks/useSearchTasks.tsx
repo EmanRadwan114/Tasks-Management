@@ -1,11 +1,5 @@
 "use client";
-import {
-  createContext,
-  useContext,
-  useRef,
-  useTransition,
-  type ReactNode,
-} from "react";
+import { useMemo, useRef, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export type SearchTasksContextValue = {
@@ -20,11 +14,12 @@ export type SearchTasksContextValue = {
   currentCategory: string;
   currentPage: number;
   isPending: boolean;
+  clearQuery: () => void;
+  hasActiveQuery: boolean;
+  hasActiveFilters: boolean;
 };
 
-const SearchTasksContext = createContext<SearchTasksContextValue | null>(null);
-
-function useSearchTasksState(): SearchTasksContextValue {
+export function useSearchTasks(): SearchTasksContextValue {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -43,7 +38,6 @@ function useSearchTasksState(): SearchTasksContextValue {
       params.delete("search");
     }
     params.set("page", "1"); // Reset to page 1 on search
-
     timerRef.current = setTimeout(() => {
       startTransition(() => {
         replace(`${pathname}?${params.toString()}`);
@@ -59,6 +53,7 @@ function useSearchTasksState(): SearchTasksContextValue {
       params.delete(key);
     }
     params.set("page", "1"); // Reset to page 1 on filter
+
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });
@@ -71,6 +66,20 @@ function useSearchTasksState(): SearchTasksContextValue {
     params.delete("assigneeId");
     params.delete("category");
     params.set("page", "1");
+    startTransition(() => {
+      replace(`${pathname}?${params.toString()}`);
+    });
+  };
+
+  const clearQuery = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("search");
+    params.delete("status");
+    params.delete("priority");
+    params.delete("assigneeId");
+    params.delete("category");
+    params.set("page", "1");
+
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });
@@ -91,6 +100,25 @@ function useSearchTasksState(): SearchTasksContextValue {
   const currentCategory = searchParams.get("category")?.toString() || "";
   const currentPage = Number(searchParams.get("page")) || 1;
 
+  const hasActiveFilters = useMemo(
+    () =>
+      Boolean(
+        currentStatus ||
+          currentPriority ||
+          currentAssigneeId ||
+          currentCategory,
+      ),
+    [currentStatus, currentPriority, currentAssigneeId, currentCategory],
+  );
+
+  const hasActiveQuery = Boolean(
+    defaultValue.trim() ||
+      currentStatus ||
+      currentPriority ||
+      currentAssigneeId ||
+      currentCategory,
+  );
+
   return {
     handleSearch,
     handleFilter,
@@ -103,22 +131,8 @@ function useSearchTasksState(): SearchTasksContextValue {
     currentCategory,
     currentPage,
     isPending,
+    clearQuery,
+    hasActiveQuery,
+    hasActiveFilters,
   };
 }
-
-export function SearchTasksProvider({ children }: { children: ReactNode }) {
-  const value = useSearchTasksState();
-  return (
-    <SearchTasksContext.Provider value={value}>
-      {children}
-    </SearchTasksContext.Provider>
-  );
-}
-
-export const useSearchTasks = (): SearchTasksContextValue => {
-  const ctx = useContext(SearchTasksContext);
-  if (!ctx) {
-    throw new Error("useSearchTasks must be used within SearchTasksProvider");
-  }
-  return ctx;
-};

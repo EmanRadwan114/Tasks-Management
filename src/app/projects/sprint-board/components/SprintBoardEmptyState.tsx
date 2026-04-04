@@ -1,40 +1,11 @@
 "use client";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { TasksIcon } from "@/components/icons";
 import { useSearchTasks } from "../hooks/useSearchTasks";
 
 export default function SprintBoardEmptyState() {
-  const {
-    defaultValue,
-    currentStatus,
-    currentPriority,
-    currentAssigneeId,
-    currentCategory,
-  } = useSearchTasks();
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  const hasActiveQuery = Boolean(
-    defaultValue.trim() ||
-      currentStatus ||
-      currentPriority ||
-      currentAssigneeId ||
-      currentCategory,
-  );
-
-  const clearQuery = () => {
-    const params = new URLSearchParams(searchParams);
-    params.delete("search");
-    params.delete("status");
-    params.delete("priority");
-    params.delete("assigneeId");
-    params.delete("category");
-    params.set("page", "1");
-    router.replace(`${pathname}?${params.toString()}`);
-  };
+  const { clearQuery, hasActiveQuery } = useSearchTasks();
 
   return (
     <div className="px-2 sm:px-7 pb-2">

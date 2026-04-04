@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import { FilterIcon } from "@/components/icons";
 import { Button, buttonVariants } from "@/components/ui/Button";
 import {
@@ -24,9 +24,8 @@ import { useSearchTasks } from "../hooks/useSearchTasks";
 import { useAssigneeOptions } from "../hooks/useAssigneeOptions";
 import { cn } from "@/lib/utils";
 
-const FILTER_ALL = "All";
-
 const BoardFilters: React.FC = () => {
+  const FILTER_ALL = "All";
   const {
     handleFilter,
     clearFilters,
@@ -34,25 +33,10 @@ const BoardFilters: React.FC = () => {
     currentPriority,
     currentAssigneeId,
     currentCategory,
+    hasActiveFilters,
   } = useSearchTasks();
 
   const assigneeOptions = useAssigneeOptions();
-
-  const statusSelectValue = currentStatus || FILTER_ALL;
-  const prioritySelectValue = currentPriority || FILTER_ALL;
-  const categorySelectValue = currentCategory || FILTER_ALL;
-  const assigneeSelectValue = currentAssigneeId || FILTER_ALL;
-
-  const hasActiveFilters = useMemo(
-    () =>
-      Boolean(
-        currentStatus ||
-          currentPriority ||
-          currentAssigneeId ||
-          currentCategory,
-      ),
-    [currentStatus, currentPriority, currentAssigneeId, currentCategory],
-  );
 
   return (
     <li className="group">
@@ -75,7 +59,7 @@ const BoardFilters: React.FC = () => {
                 Status
               </span>
               <Select
-                value={statusSelectValue}
+                value={currentStatus}
                 onValueChange={(v) =>
                   handleFilter("status", v === FILTER_ALL ? "" : v ?? "")
                 }
@@ -99,7 +83,7 @@ const BoardFilters: React.FC = () => {
                 Priority
               </span>
               <Select
-                value={prioritySelectValue}
+                value={currentPriority}
                 onValueChange={(v) =>
                   handleFilter("priority", v === FILTER_ALL ? "" : v ?? "")
                 }
@@ -123,7 +107,7 @@ const BoardFilters: React.FC = () => {
                 Category
               </span>
               <Select
-                value={categorySelectValue}
+                value={currentCategory}
                 onValueChange={(v) =>
                   handleFilter("category", v === FILTER_ALL ? "" : v ?? "")
                 }
@@ -147,7 +131,7 @@ const BoardFilters: React.FC = () => {
                 Assignee
               </span>
               <Select
-                value={assigneeSelectValue}
+                value={currentAssigneeId}
                 onValueChange={(v) =>
                   handleFilter("assigneeId", v === FILTER_ALL ? "" : v ?? "")
                 }

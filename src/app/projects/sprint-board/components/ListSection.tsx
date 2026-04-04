@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { IDisplayTask } from "../types/interfaces";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -95,9 +96,14 @@ const ListSection: React.FC<IProps> = ({ tasks, title, status }) => {
                 </div>
                 <div className="min-w-0 space-y-px">
                   <h3 className="text-sm font-semibold text-secondary-foreground">
-                    {task.title}
+                    <Link
+                      href={`/projects/sprint-board/${task.id}`}
+                      className="hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm"
+                    >
+                      {task.title}
+                    </Link>
                   </h3>
-                  <p className="text-muted-foreground text-size-xs font-normal">
+                  <p className="text-muted-foreground text-size-xs font-normal line-clamp-2">
                     {task.description}
                   </p>
                 </div>
