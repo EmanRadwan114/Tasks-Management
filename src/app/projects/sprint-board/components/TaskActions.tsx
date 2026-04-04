@@ -36,7 +36,7 @@ const TaskActions: React.FC<IProps> = ({ task }) => {
         <PopoverTrigger
           type="button"
           aria-label="Task actions"
-          className="hover:bg-slate-100! text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+          className="text-muted-foreground hover:text-primary transition-colors cursor-pointer p-1"
         >
           <DotsIcon className="size-3" />
         </PopoverTrigger>
