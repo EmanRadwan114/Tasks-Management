@@ -2,6 +2,7 @@
 import React, { ComponentType } from "react";
 import { IIcon, INavItem } from "@/types/interfaces";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface IProps {
   title: string;
@@ -29,26 +30,28 @@ const NavSection: React.FC<IProps> = ({ title, items, icon: Icon }) => {
           const Icon = item.icon;
           const isActive = item.href === `/${pathname.split("/").pop()}`;
           return (
-            <li
-              key={item.title}
-              className={`flex items-center gap-x-2.5 py-md cursor-pointer group px-md rounded-lg transition-colors ${
-                isActive ? "text-primary bg-active-background" : ""
-              }`}
-            >
-              <Icon
-                className={`group-hover:text-primary size-xl ${
-                  isActive ? "text-primary" : "text-tertiary-foreground"
-                }`}
-              />
-              <span
-                className={`text-size-regular group-hover:text-primary inline-block mt-0.5 ${
-                  isActive
-                    ? "text-primary font-semibold"
-                    : "text-secondary-foreground"
+            <li key={item.title}>
+              <Link
+                href={item.href}
+                className={`flex items-center gap-x-2.5 py-md cursor-pointer group px-md rounded-lg transition-colors ${
+                  isActive ? "text-primary bg-active-background" : ""
                 }`}
               >
-                {item.title}
-              </span>
+                <Icon
+                  className={`group-hover:text-primary size-xl ${
+                    isActive ? "text-primary" : "text-tertiary-foreground"
+                  }`}
+                />
+                <span
+                  className={`text-size-regular group-hover:text-primary inline-block mt-0.5 ${
+                    isActive
+                      ? "text-primary font-semibold"
+                      : "text-secondary-foreground"
+                  }`}
+                >
+                  {item.title}
+                </span>
+              </Link>
             </li>
           );
         })}

@@ -1,8 +1,25 @@
 "use client";
+import { useMemo, useRef, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useTransition } from "react";
 
-export const useSearchTasks = () => {
+export type SearchTasksContextValue = {
+  handleSearch: (term: string) => void;
+  handleFilter: (key: string, value: string) => void;
+  clearFilters: () => void;
+  handlePageChange: (page: number) => void;
+  defaultValue: string;
+  currentStatus: string;
+  currentPriority: string;
+  currentAssigneeId: string;
+  currentCategory: string;
+  currentPage: number;
+  isPending: boolean;
+  clearQuery: () => void;
+  hasActiveQuery: boolean;
+  hasActiveFilters: boolean;
+};
+
+export function useSearchTasks(): SearchTasksContextValue {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -21,7 +38,6 @@ export const useSearchTasks = () => {
       params.delete("search");
     }
     params.set("page", "1"); // Reset to page 1 on search
-
     timerRef.current = setTimeout(() => {
       startTransition(() => {
         replace(`${pathname}?${params.toString()}`);
@@ -37,6 +53,7 @@ export const useSearchTasks = () => {
       params.delete(key);
     }
     params.set("page", "1"); // Reset to page 1 on filter
+
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });
@@ -49,6 +66,20 @@ export const useSearchTasks = () => {
     params.delete("assigneeId");
     params.delete("category");
     params.set("page", "1");
+    startTransition(() => {
+      replace(`${pathname}?${params.toString()}`);
+    });
+  };
+
+  const clearQuery = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("search");
+    params.delete("status");
+    params.delete("priority");
+    params.delete("assigneeId");
+    params.delete("category");
+    params.set("page", "1");
+
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });
@@ -69,6 +100,25 @@ export const useSearchTasks = () => {
   const currentCategory = searchParams.get("category")?.toString() || "";
   const currentPage = Number(searchParams.get("page")) || 1;
 
+  const hasActiveFilters = useMemo(
+    () =>
+      Boolean(
+        currentStatus ||
+          currentPriority ||
+          currentAssigneeId ||
+          currentCategory,
+      ),
+    [currentStatus, currentPriority, currentAssigneeId, currentCategory],
+  );
+
+  const hasActiveQuery = Boolean(
+    defaultValue.trim() ||
+      currentStatus ||
+      currentPriority ||
+      currentAssigneeId ||
+      currentCategory,
+  );
+
   return {
     handleSearch,
     handleFilter,
@@ -81,5 +131,8 @@ export const useSearchTasks = () => {
     currentCategory,
     currentPage,
     isPending,
+    clearQuery,
+    hasActiveQuery,
+    hasActiveFilters,
   };
-};
+}

@@ -51,10 +51,11 @@ export const useArchiveTaskAction = (id: number | undefined) => {
   const [state, dispatchAction] = useActionState(archiveTaskWithId, null);
 
   useEffect(() => {
-    if (state?.success) {
+    if (state == null) return;
+    if (state.success) {
       toast.success("Task archived successfully");
-    } else {
-      toast.error(state?.error?.toString());
+    } else if (state.error) {
+      toast.error(state.error.toString());
     }
   }, [state]);
 
@@ -73,10 +74,11 @@ export const useCreateCommentAction = (taskId: number) => {
   const [state, formAction] = useActionState(createCommentWithTaskId, null);
 
   useEffect(() => {
-    if (state?.success) {
+    if (state == null) return;
+    if (state.success) {
       toast.success("Comment created successfully");
-    } else {
-      toast.error(state?.error);
+    } else if (state.error) {
+      toast.error(state.error);
     }
   }, [state]);
 

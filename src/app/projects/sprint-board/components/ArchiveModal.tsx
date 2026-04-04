@@ -1,16 +1,29 @@
 "use client";
 import Modal from "@/components/ui/Modal";
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useArchiveTaskAction } from "../hooks/useHandleActions";
 import { Button } from "@/components/ui/Button";
 
 interface IProps {
   handleModalClose: () => void;
   id: number | undefined;
+  redirectOnSuccessTo?: string;
 }
 
-const ArchiveModal: React.FC<IProps> = ({ handleModalClose, id }) => {
-  const { handleArchiveTask, isPending } = useArchiveTaskAction(id);
+const ArchiveModal: React.FC<IProps> = ({
+  handleModalClose,
+  id,
+  redirectOnSuccessTo,
+}) => {
+  const router = useRouter();
+  const { state, handleArchiveTask, isPending } = useArchiveTaskAction(id);
+
+  useEffect(() => {
+    if (state?.success && redirectOnSuccessTo) {
+      router.push(redirectOnSuccessTo);
+    }
+  }, [state, redirectOnSuccessTo, router]);
   return (
     <Modal onClose={handleModalClose} title="Archive Task">
       <div className="flex items-center justify-center">

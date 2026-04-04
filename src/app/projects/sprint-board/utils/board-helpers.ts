@@ -1,5 +1,10 @@
 import { initMsw } from "@/mocks";
-import { fetchTasks, fetchUsers } from "../services/board.services";
+import {
+  fetchComments,
+  fetchTaskById,
+  fetchTasks,
+  fetchUsers,
+} from "../services/board.services";
 import { IDisplayTask, ITask, IUser } from "../types/interfaces";
 import { TTaskCategory, TTaskPriority, TTaskStatus } from "../types/types";
 
@@ -33,6 +38,124 @@ export const fetchBoardData = async (
   } catch (error) {
     console.log(error);
   }
+};
+
+export const fetchTaskDetailData = async (taskId: number) => {
+  await initMsw();
+  try {
+    const [taskRes, commentsRes, usersRes] = await Promise.allSettled([
+      fetchTaskById(taskId),
+      fetchComments(taskId),
+      fetchUsers(),
+    ]);
+
+    const taskPayload = taskRes.status === "fulfilled" ? taskRes.value : null;
+    const task = taskPayload?.success ? taskPayload.data : null;
+
+    const commentsPayload =
+      commentsRes.status === "fulfilled" ? commentsRes.value : null;
+    const comments = commentsPayload?.success ? commentsPayload.data : [];
+
+    const usersPayload =
+      usersRes.status === "fulfilled" ? usersRes.value : null;
+    const users = usersPayload?.success ? usersPayload.data : [];
+
+    return { task, comments, users };
+  } catch (error) {
+    console.log(error);
+    return { task: null, comments: [], users: [] };
+  }
+};
+
+export const displayTaskForView = (
+  task: ITask,
+  users: IUser[],
+): IDisplayTask | null => {
+  if (!task?.id) return null;
+
+  const brandColors = [
+    "bg-brand-orange",
+    "bg-brand-yellow",
+    "bg-brand-blue",
+    "bg-brand-red",
+    "bg-brand-green",
+    "bg-primary",
+  ];
+
+  const taskInitials = task?.title?.split("")[0]?.toUpperCase();
+  const isTaskLate = new Date(task?.dueDate || "") < new Date();
+
+  const displayedDueDate = new Date(task?.dueDate || "").toLocaleDateString(
+    "en-US",
+    {
+      month: "short",
+      day: "numeric",
+    },
+  );
+  const displayedStartDate = new Date(task?.startDate || "").toLocaleDateString(
+    "en-US",
+    {
+      month: "short",
+      day: "numeric",
+    },
+  );
+
+  const taskColorIndex = (task.id || 0) % brandColors.length;
+  const taskColor = brandColors[taskColorIndex];
+
+  const assignee = users?.find((user) => user.id === task.assigneeId);
+
+  if (!assignee) {
+    return {
+      ...task,
+      assignee: undefined,
+      taskInitials,
+      taskColor,
+      displayedDueDate,
+      displayedStartDate,
+      isTaskLate,
+    };
+  }
+
+  const assigneeColorIndex = (assignee.id || 0) % brandColors.length;
+  const assigneeColor = brandColors[assigneeColorIndex];
+
+  const assigneeInitials = assignee.name
+    ?.split(" ")
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+
+  return {
+    ...task,
+    assignee,
+    taskInitials,
+    taskColor,
+    assigneeColor,
+    assigneeInitials,
+    displayedDueDate,
+    displayedStartDate,
+    isTaskLate,
+  };
+};
+
+export const formatTaskRef = (task: ITask) => {
+  let prefix = "TASK";
+  if (task?.category) {
+    const cat = task?.category.replace(/-/g, "");
+    prefix = cat.slice(0, 4).toUpperCase();
+  }
+
+  return `${prefix}-${task?.id ?? ""}`;
+};
+
+export const formatLabelFromSlug = (value?: string) => {
+  if (!value) return "";
+  return value
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 };
 
 export const tasksWithAssignees = (

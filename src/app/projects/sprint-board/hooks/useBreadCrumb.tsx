@@ -2,6 +2,8 @@ import { usePathname } from "next/navigation";
 
 const useBreadCrumb = () => {
   const pathname = usePathname();
+  console.log(pathname?.split("/"));
+
   const paths = pathname
     .split("/")
     .slice(1)

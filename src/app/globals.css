@@ -227,3 +227,17 @@ body {
   scrollbar-width: thin; /* "auto" or "thin" */
   scrollbar-color: var(--tertiary-foreground) transparent; /* thumb color | track color */
 }
+
+/* Shimmer sweep for Skeleton (shadcn) */
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  animation: skeleton-shimmer 2s ease-in-out infinite;
+}

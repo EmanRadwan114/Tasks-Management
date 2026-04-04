@@ -4,14 +4,21 @@ import BreadCrumb from "./BreadCrumb";
 import Search from "@/components/ui/Search";
 import { BellIcon, SettingsIcon, MenuIcon } from "@/components/icons";
 import { Button } from "@/components/ui/Button";
+import { IDisplayTask } from "../types/interfaces";
+import { formatTaskRef } from "../utils/board-helpers";
 
-const ProjectsHeader: React.FC = () => {
+interface IProps {
+  displayTask?: IDisplayTask;
+}
+
+const ProjectsHeader: React.FC<IProps> = ({ displayTask }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const taskRef = displayTask ? formatTaskRef(displayTask) : "";
 
   return (
     <header className="relative flex items-center justify-between px-4 md:px-6 py-2 border-b border-secondary-background">
       <div className="flex items-center justify-between w-full lg:w-auto">
-        <BreadCrumb />
+        <BreadCrumb lastSegmentLabel={taskRef} />
 
         {/* Mobile Menu Toggle */}
         <Button
