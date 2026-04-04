@@ -7,12 +7,16 @@ export const fetchBoardData = async (
   search?: string,
   page: number = 1,
   limit: number = 10,
+  status?: string,
+  priority?: string,
+  assigneeId?: string,
+  category?: string,
 ) => {
   await initMsw();
   try {
     const [users, tasks] = await Promise.allSettled([
       fetchUsers(),
-      fetchTasks(search, page, limit),
+      fetchTasks(search, page, limit, status, priority, assigneeId, category),
     ]);
 
     if (users.status === "fulfilled" && tasks.status === "fulfilled") {

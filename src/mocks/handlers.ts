@@ -71,16 +71,42 @@ export const handlers = [
   http.get("*/api/tasks", ({ request }) => {
     const url = new URL(request.url);
     const search = url.searchParams.get("search");
+    const status = url.searchParams.get("status");
+    const priority = url.searchParams.get("priority");
+    const assigneeId = url.searchParams.get("assigneeId");
+    const category = url.searchParams.get("category");
     const page = Number(url.searchParams.get("page")) || 1;
     const limit = Number(url.searchParams.get("limit")) || 10;
 
     let filteredTasks = tasks;
 
     if (search) {
-      filteredTasks = tasks.filter(
+      filteredTasks = filteredTasks.filter(
         (task) =>
           task.title?.toLowerCase().includes(search.toLowerCase()) ||
           task.description?.toLowerCase().includes(search.toLowerCase()),
+      );
+    }
+
+    if (status) {
+      filteredTasks = filteredTasks.filter((task) => task.status === status);
+    }
+
+    if (priority) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority === priority,
+      );
+    }
+
+    if (assigneeId) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.assigneeId === Number(assigneeId),
+      );
+    }
+
+    if (category) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.category === category,
       );
     }
 

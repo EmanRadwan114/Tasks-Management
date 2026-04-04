@@ -29,6 +29,31 @@ export const useSearchTasks = () => {
     }, 400);
   };
 
+  const handleFilter = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    params.set("page", "1"); // Reset to page 1 on filter
+    startTransition(() => {
+      replace(`${pathname}?${params.toString()}`);
+    });
+  };
+
+  const clearFilters = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("status");
+    params.delete("priority");
+    params.delete("assigneeId");
+    params.delete("category");
+    params.set("page", "1");
+    startTransition(() => {
+      replace(`${pathname}?${params.toString()}`);
+    });
+  };
+
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", page.toString());
@@ -38,12 +63,22 @@ export const useSearchTasks = () => {
   };
 
   const defaultValue = searchParams.get("search")?.toString() || "";
+  const currentStatus = searchParams.get("status")?.toString() || "";
+  const currentPriority = searchParams.get("priority")?.toString() || "";
+  const currentAssigneeId = searchParams.get("assigneeId")?.toString() || "";
+  const currentCategory = searchParams.get("category")?.toString() || "";
   const currentPage = Number(searchParams.get("page")) || 1;
 
   return {
     handleSearch,
+    handleFilter,
+    clearFilters,
     handlePageChange,
     defaultValue,
+    currentStatus,
+    currentPriority,
+    currentAssigneeId,
+    currentCategory,
     currentPage,
     isPending,
   };

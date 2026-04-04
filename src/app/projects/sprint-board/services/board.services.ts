@@ -23,10 +23,26 @@ export const fetchTasks = async (
   search?: string,
   page: number = 1,
   limit: number = 10,
+  status?: string,
+  priority?: string,
+  assigneeId?: string,
+  category?: string,
 ) => {
   const url = new URL(`${BASE_URL}/api/tasks`);
   if (search) {
     url.searchParams.append("search", search);
+  }
+  if (status) {
+    url.searchParams.append("status", status);
+  }
+  if (priority) {
+    url.searchParams.append("priority", priority);
+  }
+  if (assigneeId) {
+    url.searchParams.append("assigneeId", assigneeId);
+  }
+  if (category) {
+    url.searchParams.append("category", category);
   }
   url.searchParams.append("page", page.toString());
   url.searchParams.append("limit", limit.toString());
