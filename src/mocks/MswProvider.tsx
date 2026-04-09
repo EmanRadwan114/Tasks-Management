@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export function MswProvider({ children }: { children: React.ReactNode }) {
-  const [mswReady, setMswReady] = useState(false)
+  const [mswReady, setMswReady] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('./index').then(({ initMsw }) => {
-        initMsw().then(() => setMswReady(true))
-      })
+    if (typeof window !== "undefined") {
+      import("./index").then(({ initMsw }) => {
+        initMsw().then(() => setMswReady(true));
+      });
     } else {
-      setMswReady(true)
+      setMswReady(true);
     }
-  }, [])
+  }, []);
 
   if (!mswReady) {
-    return null
+    return null;
   }
 
-  return <>{children}</>
+  return <>{children}</>;
 }
