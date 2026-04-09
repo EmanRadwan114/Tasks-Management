@@ -34,21 +34,21 @@ export const projectItems: INavItem[] = [
   {
     title: "Sprint Board",
     icon: SvgSprintIcon,
-    href: "/sprint-board",
+    href: "/projects/sprint-board",
   },
   {
     title: "Backlog",
     icon: SvgBacklogIcon,
-    href: "/backlog",
+    href: "/projects/backlog",
   },
   {
     title: "Roadmap",
     icon: SvgRoadmapIcon,
-    href: "/roadmap",
+    href: "/projects/roadmap",
   },
   {
     title: "Releases",
     icon: SvgReleasesIcon,
-    href: "/releases",
+    href: "/projects/releases",
   },
 ];

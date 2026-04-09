@@ -34,10 +34,7 @@ export default function RootLayout({
         geist.variable,
       )}
     >
-      <body
-        className="min-h-full flex flex-col md:flex-row"
-        suppressHydrationWarning
-      >
+      <body className="min-h-full flex flex-col md:flex-row">
         <MswProvider>
           <ToastContainer />
           {/* navbar */}
